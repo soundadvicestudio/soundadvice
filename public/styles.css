@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black:          #000000;
+  --bg-card:        #0d0d0d;
+  --bg-dark:        #191919;
+  --purple:         rgb(149, 79, 203);
+  --purple-dim:     rgba(149, 79, 203, 0.15);
+  --teal:           rgb(74, 138, 147);
+  --teal-dark:      rgb(60, 112, 120);
+  --teal-bg:        rgba(74, 138, 147, 0.85);
+  --white:          #ffffff;
+  --text-body:      rgba(255, 255, 255, 0.92);
+  --text-muted:     rgba(255, 255, 255, 0.65);
+  --text-dim:       rgba(255, 255, 255, 0.40);
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-mid:     rgba(255, 255, 255, 0.15);
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  color: var(--white);
+  background-color: var(--black);
+  overflow-x: hidden;
+}
+
+/* ── PAGE BACKGROUND ── */
+.page-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background-image: url('https://static.wixstatic.com/media/23043d_b6f0925552004eeaa819d6dd8cf41ec8~mv2.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+.page-content {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER / NAV ── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--black);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 32px;
+  gap: 0;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+  align-items: center;
+  flex: 1;
+}
+
+.nav-links.right {
+  justify-content: flex-end;
+}
+
+.nav-links a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.nav-links a:hover { color: var(--white); }
+.nav-links a.active { color: var(--purple); }
+
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+  padding: 0 32px;
+}
+
+.nav-logo img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* ── FOOTER ── */
+.site-footer {
+  background: var(--black);
+  border-top: 1px solid var(--border-subtle);
+  padding: 28px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  gap: 20px;
+}
+
+.footer-badge img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+}
+
+.footer-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.footer-socials a img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.footer-copy {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ── BUTTONS ── */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 22px;
+  background: var(--black);
+  border: 2px solid var(--white);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+.btn-outline::before {
+  content: '→';
+  font-size: 15px;
+}
+
+.btn-teal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 28px;
+  background: var(--teal);
+  border: 2px solid var(--teal);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-teal:hover {
+  background: var(--teal-dark);
+  border-color: var(--teal-dark);
+}
+
+/* ── SHARED SECTION ELEMENTS ── */
+.section-heading {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--purple);
+  text-align: center;
+}
+
+.section-subheading {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(15px, 1.6vw, 17px);
+  font-weight: 400;
+  color: var(--text-body);
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.page-title-block {
+  padding: 64px 40px 40px;
+  text-align: center;
+}
+
+.divider-line {
+  width: 120px;
+  height: 2px;
+  background: var(--purple);
+  margin: 0 auto;
+  opacity: 0.55;
+}
+
+.main-content {
+  flex: 1;
+}
+
+/* ── WIDGET CARD (My Music Staff embed container) ── */
+.widget-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 8px;
+  min-height: 500px;
+}
+
+/* ── LOADING STATE ── */
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  color: var(--text-dim);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .nav-top {
+    flex-direction: column;
+    padding: 14px 20px;
+    gap: 12px;
+  }
+  .nav-links { justify-content: center; flex-wrap: wrap; gap: 18px; }
+  .nav-links.right { justify-content: center; }
+  .nav-logo { padding: 0 16px; }
+}
+
+@media (max-width: 600px) {
+  .nav-links a { font-size: 10px; letter-spacing: 0.08em; }
+  .nav-links { gap: 12px; }
+  .site-footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+  }
+  .page-title-block { padding: 48px 24px 32px; }
+}
