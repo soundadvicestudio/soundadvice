@@ -90,7 +90,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 32px 18px;
+  padding: 24px 32px 22px;
   background: var(--black);
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -101,7 +101,7 @@ body {
 }
 
 .logo-bar img {
-  height: 130px;
+  height: 165px;
   width: auto;
   object-fit: contain;
   display: block;
@@ -198,12 +198,6 @@ body {
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
   white-space: nowrap;
-}
-
-.btn-teal::before {
-  content: '→';
-  font-size: 15px;
-  margin-right: 8px;
 }
 
 .btn-teal:hover {

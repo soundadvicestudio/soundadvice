@@ -14,13 +14,14 @@
     }
     .hero-headline {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(72px, 11vw, 130px);
+      font-size: clamp(64px, 9.5vw, 118px);
       font-weight: 400;
       line-height: 0.93;
       text-transform: uppercase;
       letter-spacing: 0.01em;
       color: var(--purple);
       margin-bottom: 36px;
+      max-width: 700px;
     }
     .hero-body-card {
       background: var(--teal-bg);
@@ -28,19 +29,24 @@
       display: inline-block;
       max-width: 700px;
     }
-    .hero-btn-inline {
-      display: inline-flex;
-      vertical-align: middle;
-      margin-top: 4px;
-    }
     .hero-body-text {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(14px, 1.6vw, 17px);
+      font-size: clamp(13px, 1.5vw, 16px);
       font-weight: 400;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.025em;
       color: var(--white);
       line-height: 1.55;
       margin-bottom: 0;
+      display: inline;
+    }
+    .hero-cta-row {
+      display: inline;
+    }
+    .hero-cta-row .btn-outline {
+      display: inline-flex;
+      vertical-align: middle;
+      margin-left: 12px;
+      white-space: nowrap;
     }
 
     /* ── UPCOMING EVENTS ── */
@@ -160,6 +166,22 @@
       font-size: 15px;
       padding: 20px 0;
     }
+    .cta-with-arrow {
+      display: inline-flex;
+      align-items: stretch;
+      justify-content: center;
+    }
+    .cta-arrow-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--white);
+      color: var(--black);
+      font-size: 18px;
+      padding: 0 16px;
+      line-height: 1;
+      border: 2px solid var(--white);
+    }
 
     /* ── TESTIMONIALS ── */
     .testimonials-section {
@@ -269,9 +291,9 @@
 
       <!-- HERO -->
       <section class="hero">
-        <h1 class="hero-headline">Realize Your<br>Vocal Potential</h1>
+        <h1 class="hero-headline">REALIZE YOUR VOCAL POTENTIAL</h1>
         <div class="hero-body-card">
-          <p class="hero-body-text">A voice coaching studio specializing in Musical Theater and Contemporary Commercial Music, offering private coaching, music direction, audition/college preparation, workshops, sound design, and more. &nbsp;&nbsp;<a href="/new-clients.html" class="btn-outline hero-btn-inline">Book a Session</a></p>
+          <p class="hero-body-text">A voice coaching studio specializing in Musical Theater and Contemporary Commercial Music, offering private coaching, music direction, audition/college preparation, workshops, sound design, and more.</p><div class="hero-cta-row"><a href="/new-clients.html" class="btn-outline">Book a Session</a></div>
         </div>
       </section>
 
@@ -289,7 +311,7 @@
         <div class="events-grid" id="events-grid">
           <div class="loading-placeholder">Loading events...</div>
         </div>
-        <div style="text-align:center"><a href="/services.html" class="btn-teal">Explore More</a></div>
+        <div style="text-align:center"><div class="cta-with-arrow"><span class="cta-arrow-box">→</span><a href="/services.html" class="btn-teal">Explore More</a></div></div>
       </section>
 
       <!-- TESTIMONIALS -->
