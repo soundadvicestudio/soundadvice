@@ -42,7 +42,7 @@ export function initNav(activePage) {
   const footerHTML = `
     <footer class="site-footer">
       <div class="footer-badge">
-        <img src="https://static.wixstatic.com/media/23043d_4614fb47600441c198bfbbfe93e2265e~mv2.png" alt="NATS — National Association of Teachers of Singing" />
+        <img src="https://static.wixstatic.com/media/23043d_7b4e3ff7e2864e3ab188e7209775df5d~mv2.png" alt="Vocal Health Education Member" />
       </div>
       <div class="footer-center">
         <div class="footer-socials">
@@ -59,7 +59,7 @@ export function initNav(activePage) {
         <p class="footer-copy">©2026 SOUND ADVICE VOCAL STUDIO LLC - All rights reserved.</p>
       </div>
       <div class="footer-badge">
-        <img src="https://static.wixstatic.com/media/23043d_7b4e3ff7e2864e3ab188e7209775df5d~mv2.png" alt="Vocal Health Education Member" />
+        <img src="https://static.wixstatic.com/media/23043d_4614fb47600441c198bfbbfe93e2265e~mv2.png" alt="NATS — National Association of Teachers of Singing" />
       </div>
     </footer>
   `;
