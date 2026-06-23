@@ -55,9 +55,8 @@
       display: block;
       background: rgba(0, 0, 0, 0.85);
       padding: 4px 12px;
-      margin-bottom: 2px;
-      width: fit-content;
-      max-width: 100%;
+      margin-bottom: 0;
+      width: 100%;
     }
 
     .hero-cta-row {
@@ -150,26 +149,28 @@
       letter-spacing: 0.02em;
       background: var(--teal);
       color: var(--white);
-      padding: 10px 6px 10px 10px;
+      padding: 10px 52px 10px 10px;
       display: flex;
       align-items: center;
       line-height: 1;
       overflow: hidden;
+      position: relative;
     }
 
     .events-heading-accent {
-      display: inline-block;
-      width: 36px;
-      height: 100%;
-      align-self: stretch;
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 44px;
       background: repeating-linear-gradient(
         -45deg,
         var(--purple) 0px,
         var(--purple) 5px,
-        transparent 5px,
-        transparent 11px
+        var(--teal) 5px,
+        var(--teal) 11px
       );
-      margin-left: 8px;
       flex-shrink: 0;
     }
 
@@ -383,9 +384,10 @@
           <h1 class="hero-headline">Realize Your<br>Vocal Potential</h1>
           <div class="hero-card">
             <p class="hero-body-text">
-              <span>A voice coaching studio specializing in Musical Theater and Contemporary Commercial Music,</span><br>
-              <span>offering private coaching, music direction,</span><br>
-              <span>audition/college preparation, workshops,</span><br>
+              <span>A voice coaching studio specializing in Musical Theater</span>
+              <span>and Contemporary Commercial Music,</span>
+              <span>offering private coaching, music direction,</span>
+              <span>audition/college preparation, workshops,</span>
               <span>sound design, and more.</span>
             </p>
             <div class="hero-cta-row">
