@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | Sound Advice Vocal Studio</title>
+  <meta name="description" content="Vocal coaching, music direction, audition prep, workshops, vocal health, and sound design services at Sound Advice Vocal Studio." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .services-intro {
+      padding: 72px 48px 56px;
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .services-intro-heading {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--teal);
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+
+    .services-intro-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(15px, 1.6vw, 17px);
+      font-weight: 400;
+      color: var(--text-body);
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .services-grid {
+      padding: 0 48px 80px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 20px;
+    }
+
+    .service-card-image {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .service-card-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--purple);
+      letter-spacing: 0.01em;
+    }
+
+    .service-card-body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text-body);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 860px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 32px 60px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .services-grid {
+        grid-template-columns: 1fr;
+        padding: 0 24px 48px;
+      }
+      .services-intro {
+        padding: 48px 24px 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg"></div>
+  <div class="page-content">
+    <div id="site-header"></div>
+
+    <main class="main-content">
+
+      <section class="services-intro">
+        <h1 class="services-intro-heading">Your Voice, Your Growth, Our Expertise</h1>
+        <p class="services-intro-body">At Sound Advice Vocal Studio, we offer a range of services designed to support, strengthen, and elevate your voice and performance. Whether you're seeking personalized coaching, audition prep, vocal health guidance, or professional sound design, we provide the tools and expertise to help you succeed. Explore our services and take the next step in your vocal journey.</p>
+      </section>
+
+      <section class="services-grid">
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/11062b_803b86a4faad4238a4443cf629a1fb76~mv2.jpeg/v1/crop/x_1000,y_0,w_4016,h_4016/fill/w_242,h_242,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Singer.jpeg"
+            alt="Vocal Coaching" />
+          <h2 class="service-card-title">Vocal Coaching</h2>
+          <p class="service-card-body">Personalized training designed to help you develop confidence, technique, and artistry. Whether you're working on vocal strength, flexibility, performance, or style, our tailored approach ensures you reach your full potential.</p>
+        </div>
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/23043d_bd444f9c42224274b2bf96d186e7caf8~mv2.png/v1/crop/x_318,y_0,w_2365,h_2365/fill/w_242,h_242,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/11062b_8bb9e2c7326248bf8c064a990a9dcea5~.png"
+            alt="Music Direction" />
+          <h2 class="service-card-title">Music Direction</h2>
+          <p class="service-card-body">Expert guidance for musical productions, from customized vocal arrangements to ensemble coaching. We help bring your creative vision to life with professional leadership and artistic direction. <em>Demo reel available on request.</em></p>
+        </div>
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/11062b_c2e6a0a1542d41b5aab58d03b0b6af85~mv2.jpg/v1/crop/x_837,y_0,w_3327,h_3327/fill/w_242,h_242,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Casting.jpg"
+            alt="Audition and College Prep" />
+          <h2 class="service-card-title">Audition and College Prep</h2>
+          <p class="service-card-body">Stand out in auditions with customized coaching for school musicals, professional auditions, and college programs. We'll fine-tune your repertoire, technique, and stage presence for your best performance.</p>
+        </div>
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/fcb1209b19c34a08b3fecce3a0445b2a.jpg/v1/crop/x_888,y_0,w_1583,h_1583/fill/w_242,h_242,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Doctor%20and%20Patient%20.jpg"
+            alt="Vocal Health First Aid" />
+          <h2 class="service-card-title">Vocal Health First Aid</h2>
+          <p class="service-card-body">Immediate and informed guidance on vocal strain, fatigue, and injury prevention, referring on to ENT specialists and speech-language pathologists when necessary to ensure the best care for your instrument.</p>
+        </div>
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/11062b_495804036c974197940b57dc3465f91f~mv2.jpg/v1/crop/x_864,y_0,w_3456,h_3456/fill/w_242,h_242,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Performing%20Art%20Class.jpg"
+            alt="Workshops and Classes" />
+          <h2 class="service-card-title">Workshops &amp; Classes</h2>
+          <p class="service-card-body">Engaging, hands-on group sessions led by professional musicians, covering a range of topics like style, technique, performance skills, and career insights. Perfect for singers looking to grow in a collaborative setting.</p>
+        </div>
+
+        <div class="service-card">
+          <img class="service-card-image"
+            src="https://static.wixstatic.com/media/11062b_29ecb5d46ce2489aa23ed1957fb05648~mv2.jpg/v1/crop/x_488,y_0,w_1948,h_1948/fill/w_242,h_242,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Making%20Music.jpg"
+            alt="Sound Design" />
+          <h2 class="service-card-title">Sound Design</h2>
+          <p class="service-card-body">Enhance your show with sound optimized for your venue to create an immersive experience. Whether you need scenic underscoring, custom recorded elements, or just some sound advice, we've got you covered.</p>
+        </div>
+
+      </section>
+
+    </main>
+
+    <div id="site-footer"></div>
+  </div>
+
+  <script type="module">
+    import { initNav } from '/components.js';
+    initNav('services');
+  </script>
+</body>
+</html>
