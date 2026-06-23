@@ -10,15 +10,12 @@
     /* ── HERO ── */
     .hero {
       padding: 60px 0 50px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       width: 100%;
     }
 
     .hero-inner {
       width: 100%;
-      max-width: 1100px;
+      max-width: 900px;
       padding: 0 48px;
       display: flex;
       flex-direction: column;
@@ -118,22 +115,19 @@
       position: relative;
       z-index: 1;
     }
-    .events-heading-frame {
-      margin-bottom: 40px;
+    .events-heading-wrap {
+      margin-bottom: 0;
+      position: relative;
     }
-    .events-rule {
-      height: 2px;
-      background: var(--purple);
-      opacity: 0.45;
-      width: 100%;
-      max-width: 900px;
-    }
+
     .events-heading-row {
       display: flex;
       align-items: stretch;
-      margin-bottom: 6px;
       width: fit-content;
+      position: relative;
+      z-index: 1;
     }
+
     .events-heading-black {
       font-family: 'Anton', sans-serif;
       font-size: clamp(30px, 4.5vw, 52px);
@@ -142,9 +136,12 @@
       letter-spacing: 0.02em;
       background: var(--white);
       color: var(--black);
-      padding: 8px 16px;
-      display: block;
+      padding: 10px 14px 10px 16px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
     }
+
     .events-heading-teal {
       font-family: 'Anton', sans-serif;
       font-size: clamp(30px, 4.5vw, 52px);
@@ -153,18 +150,46 @@
       letter-spacing: 0.02em;
       background: var(--teal);
       color: var(--white);
-      padding: 8px 20px 8px 12px;
-      display: block;
+      padding: 10px 60px 10px 10px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      position: relative;
     }
+
     .events-heading-accent {
-      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
       width: 32px;
-      height: 100%;
+      background: repeating-linear-gradient(
+        135deg,
+        var(--purple) 0px,
+        var(--purple) 4px,
+        transparent 4px,
+        transparent 10px
+      );
+    }
+
+    .events-rule-below {
+      width: 100%;
+      height: 1px;
       background: var(--purple);
       opacity: 0.7;
-      clip-path: polygon(0 0, 60% 0, 100% 50%, 60% 100%, 0 100%);
-      align-self: stretch;
-      min-height: 40px;
+      position: relative;
+      margin-top: 0;
+    }
+
+    .events-rule-below::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+      height: 32px;
+      background: var(--purple);
+      opacity: 1;
     }
     .events-grid {
       display: flex;
@@ -371,14 +396,15 @@
 
       <!-- UPCOMING EVENTS -->
       <section class="events-section">
-        <div class="events-heading-frame">
-          <div class="events-rule"></div>
+        <div class="events-heading-wrap">
           <div class="events-heading-row">
             <span class="events-heading-black">Upcoming</span>
-            <span class="events-heading-teal">Events</span>
-            <span class="events-heading-accent"></span>
+            <span class="events-heading-teal">
+              Events
+              <span class="events-heading-accent"></span>
+            </span>
           </div>
-          <div class="events-rule"></div>
+          <div class="events-rule-below"></div>
         </div>
         <div class="events-grid" id="events-grid">
           <div class="loading-placeholder">Loading events...</div>
