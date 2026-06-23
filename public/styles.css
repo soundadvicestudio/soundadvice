@@ -66,8 +66,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 28px;
-  padding: 10px 28px;
+  gap: 8px;
+  padding: 22px 27px;
   background: var(--black);
 }
 
@@ -81,6 +81,8 @@ body {
   color: var(--white);
   transition: color 0.2s;
   white-space: nowrap;
+  padding: 10px 10px;
+  margin: 4px 0;
 }
 
 .nav-bar a:hover { color: var(--text-muted); }
@@ -90,7 +92,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px 32px 18px;
+  padding: 30px 32px 1px;
   background: var(--black);
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -101,8 +103,8 @@ body {
 }
 
 .logo-bar img {
-  height: 165px;
-  width: auto;
+  height: 232px;
+  width: 295px;
   object-fit: contain;
   display: block;
 }
@@ -269,14 +271,14 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
-  .nav-bar { flex-wrap: wrap; gap: 16px; padding: 10px 20px; }
+  .nav-bar { flex-wrap: wrap; gap: 6px; padding: 16px 20px; }
   .logo-bar img { height: 100px; }
 }
 
 @media (max-width: 600px) {
-  .nav-bar a { font-size: 13px; }
+  .nav-bar a { font-size: 13px; padding: 8px 6px; }
   .nav-bar { gap: 12px; }
-  .logo-bar img { height: 80px; }
+  .logo-bar img { height: 160px; width: auto; }
   .site-footer {
     flex-direction: column;
     text-align: center;
