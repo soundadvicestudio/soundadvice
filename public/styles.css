@@ -42,6 +42,7 @@ body {
   inset: 0;
   z-index: 0;
   min-height: 100%;
+  background-color: #ffffff;
 }
 
 /* Layer 1: background image at variable opacity */
