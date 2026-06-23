@@ -60,30 +60,18 @@ body {
   top: 0;
   z-index: 100;
   background: var(--black);
-  border-bottom: 1px solid var(--border-subtle);
 }
 
-.nav-top {
+.nav-bar {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 32px;
   padding: 10px 32px;
-  gap: 0;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-  align-items: center;
-  flex: 1;
-}
-
-.nav-links.right {
-  justify-content: flex-end;
-}
-
-.nav-links a {
+.nav-bar a {
   font-family: 'DM Sans', sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -95,23 +83,28 @@ body {
   white-space: nowrap;
 }
 
-.nav-links a:hover { color: var(--white); }
-.nav-links a.active { color: var(--purple); }
+.nav-bar a:hover { color: var(--white); }
+.nav-bar a.active { color: var(--purple); }
 
-.nav-logo {
+.logo-bar {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  text-decoration: none;
-  flex-shrink: 0;
-  padding: 0 32px;
+  padding: 20px 32px 18px;
+  background: var(--black);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.nav-logo img {
-  width: 64px;
-  height: 64px;
+.logo-bar a {
+  display: block;
+  text-decoration: none;
+}
+
+.logo-bar img {
+  height: 130px;
+  width: auto;
   object-fit: contain;
-  border-radius: 50%;
+  display: block;
 }
 
 /* ── FOOTER ── */
@@ -207,6 +200,12 @@ body {
   white-space: nowrap;
 }
 
+.btn-teal::before {
+  content: '→';
+  font-size: 15px;
+  margin-right: 8px;
+}
+
 .btn-teal:hover {
   background: var(--teal-dark);
   border-color: var(--teal-dark);
@@ -276,19 +275,14 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
-  .nav-top {
-    flex-direction: column;
-    padding: 14px 20px;
-    gap: 12px;
-  }
-  .nav-links { justify-content: center; flex-wrap: wrap; gap: 18px; }
-  .nav-links.right { justify-content: center; }
-  .nav-logo { padding: 0 16px; }
+  .nav-bar { flex-wrap: wrap; gap: 16px; padding: 10px 20px; }
+  .logo-bar img { height: 100px; }
 }
 
 @media (max-width: 600px) {
-  .nav-links a { font-size: 10px; letter-spacing: 0.08em; }
-  .nav-links { gap: 12px; }
+  .nav-bar a { font-size: 10px; letter-spacing: 0.08em; }
+  .nav-bar { gap: 10px; }
+  .logo-bar img { height: 80px; }
   .site-footer {
     flex-direction: column;
     text-align: center;

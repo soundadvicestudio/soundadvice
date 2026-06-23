@@ -26,21 +26,16 @@ export function initNav(activePage) {
 
   const navHTML = `
     <header class="site-header">
-      <nav class="nav-top" aria-label="Main navigation">
-        <ul class="nav-links left">
-          ${leftPages.map(p => `
-            <li><a href="${p.href}"${p.key === activePage ? ' class="active" aria-current="page"' : ''}>${p.label}</a></li>
-          `).join('')}
-        </ul>
-        <a href="/index.html" class="nav-logo" aria-label="Sound Advice Vocal Studio — Home">
-          <img src="https://static.wixstatic.com/media/23043d_9cbf6867b112498ea07b1bfb7e3ca04b~mv2.jpg" alt="Sound Advice Vocal Studio logo" />
-        </a>
-        <ul class="nav-links right">
-          ${rightPages.map(p => `
-            <li><a href="${p.href}"${p.key === activePage ? ' class="active" aria-current="page"' : ''}>${p.label}</a></li>
-          `).join('')}
-        </ul>
+      <nav class="nav-bar" aria-label="Main navigation">
+        ${[...leftPages, ...rightPages].map(p => `
+          <a href="${p.href}"${p.key === activePage ? ' class="active" aria-current="page"' : ''}>${p.label}</a>
+        `).join('')}
       </nav>
+      <div class="logo-bar">
+        <a href="/index.html" aria-label="Sound Advice Vocal Studio — Home">
+          <img src="https://static.wixstatic.com/media/23043d_9cbf6867b112498ea07b1bfb7e3ca04b~mv2.jpg" alt="Sound Advice Vocal Studio" />
+        </a>
+      </div>
     </header>
   `;
 

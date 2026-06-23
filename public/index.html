@@ -14,7 +14,7 @@
     }
     .hero-headline {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(52px, 9vw, 108px);
+      font-size: clamp(72px, 11vw, 130px);
       font-weight: 400;
       line-height: 0.93;
       text-transform: uppercase;
@@ -24,23 +24,40 @@
     }
     .hero-body-card {
       background: var(--teal-bg);
-      padding: 28px 32px 28px;
+      padding: 28px 32px;
       display: inline-block;
       max-width: 700px;
     }
+    .hero-btn-inline {
+      display: inline-flex;
+      vertical-align: middle;
+      margin-top: 4px;
+    }
     .hero-body-text {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(13px, 1.5vw, 16px);
+      font-size: clamp(14px, 1.6vw, 17px);
       font-weight: 400;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.02em;
       color: var(--white);
-      line-height: 1.6;
-      margin-bottom: 22px;
+      line-height: 1.55;
+      margin-bottom: 0;
     }
 
     /* ── UPCOMING EVENTS ── */
     .events-section {
       padding: 56px 48px 64px;
+      position: relative;
+      z-index: 1;
+    }
+    .events-heading-frame {
+      margin-bottom: 40px;
+    }
+    .events-rule {
+      height: 2px;
+      background: var(--purple);
+      opacity: 0.45;
+      width: 100%;
+      max-width: 900px;
     }
     .events-heading-row {
       display: flex;
@@ -70,16 +87,20 @@
       padding: 8px 20px 8px 12px;
       display: block;
     }
-    .events-divider {
-      height: 2px;
+    .events-heading-accent {
+      display: inline-block;
+      width: 32px;
+      height: 100%;
       background: var(--purple);
-      opacity: 0.5;
-      max-width: 900px;
-      margin-bottom: 40px;
+      opacity: 0.7;
+      clip-path: polygon(0 0, 60% 0, 100% 50%, 60% 100%, 0 100%);
+      align-self: stretch;
+      min-height: 40px;
     }
     .events-grid {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
       gap: 28px;
       margin-bottom: 40px;
     }
@@ -87,8 +108,9 @@
       background: var(--bg-dark);
       border: 1px solid var(--border-subtle);
       width: 100%;
-      max-width: 520px;
+      max-width: 590px;
       overflow: hidden;
+      margin: 0 auto;
     }
     .event-card-image {
       width: 100%;
@@ -142,6 +164,8 @@
     /* ── TESTIMONIALS ── */
     .testimonials-section {
       padding: 40px 48px 80px;
+      position: relative;
+      z-index: 1;
     }
     .testimonial-slider-wrap {
       max-width: 660px;
@@ -247,22 +271,25 @@
       <section class="hero">
         <h1 class="hero-headline">Realize Your<br>Vocal Potential</h1>
         <div class="hero-body-card">
-          <p class="hero-body-text">A voice coaching studio specializing in Musical Theater and Contemporary Commercial Music, offering private coaching, music direction, audition/college preparation, workshops, sound design, and more.</p>
-          <a href="/new-clients.html" class="btn-outline">Book a Session</a>
+          <p class="hero-body-text">A voice coaching studio specializing in Musical Theater and Contemporary Commercial Music, offering private coaching, music direction, audition/college preparation, workshops, sound design, and more. &nbsp;&nbsp;<a href="/new-clients.html" class="btn-outline hero-btn-inline">Book a Session</a></p>
         </div>
       </section>
 
       <!-- UPCOMING EVENTS -->
       <section class="events-section">
-        <div class="events-heading-row">
-          <span class="events-heading-black">Upcoming</span>
-          <span class="events-heading-teal">Events</span>
+        <div class="events-heading-frame">
+          <div class="events-rule"></div>
+          <div class="events-heading-row">
+            <span class="events-heading-black">Upcoming</span>
+            <span class="events-heading-teal">Events</span>
+            <span class="events-heading-accent"></span>
+          </div>
+          <div class="events-rule"></div>
         </div>
-        <div class="events-divider"></div>
         <div class="events-grid" id="events-grid">
           <div class="loading-placeholder">Loading events...</div>
         </div>
-        <a href="/services.html" class="btn-outline">Explore More</a>
+        <div style="text-align:center"><a href="/services.html" class="btn-teal">Explore More</a></div>
       </section>
 
       <!-- TESTIMONIALS -->
