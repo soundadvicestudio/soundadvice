@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Oswald:wght@300;400&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -69,13 +69,14 @@ body {
   gap: 8px;
   padding: 0 27px;
   height: 39px;
+  margin-top: 22px;
   background: var(--black);
 }
 
 .nav-bar a {
-  font-family: 'Barlow Condensed', sans-serif;
+  font-family: 'Oswald', sans-serif;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 300;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-decoration: none;
@@ -292,13 +293,13 @@ body {
 
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
-  .nav-bar { flex-wrap: wrap; gap: 6px; padding: 16px 20px; }
+  .nav-bar { flex-wrap: wrap; gap: 6px; padding: 16px 20px; margin-top: 16px; }
   .logo-bar img { height: 100px; }
 }
 
 @media (max-width: 600px) {
   .nav-bar a { font-size: 13px; padding: 8px 6px; }
-  .nav-bar { gap: 12px; }
+  .nav-bar { gap: 12px; margin-top: 10px; }
   .logo-bar img { height: 160px; width: auto; }
   .site-footer {
     flex-direction: column;
