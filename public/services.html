@@ -15,21 +15,22 @@
     }
 
     .services-intro-heading {
-      font-family: 'DM Sans', sans-serif;
-      font-size: clamp(28px, 4vw, 48px);
+      font-family: 'Oswald', sans-serif;
+      font-size: 56px;
       font-weight: 300;
-      font-style: italic;
-      color: var(--teal);
+      font-style: normal;
+      color: rgb(252, 151, 121);
       margin-bottom: 28px;
       letter-spacing: 0.01em;
+      line-height: 1.4;
     }
 
     .services-intro-body {
       font-family: 'DM Sans', sans-serif;
-      font-size: clamp(15px, 1.6vw, 17px);
-      font-weight: 400;
-      color: var(--text-body);
-      line-height: 1.7;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.8;
       text-align: center;
     }
 
@@ -60,36 +61,30 @@
     }
 
     .service-card-title {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--purple);
+      font-family: 'Oswald', sans-serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: rgb(135, 69, 189);
       letter-spacing: 0.01em;
+      line-height: 1.4;
     }
 
     .service-card-body {
       font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 400;
-      color: var(--text-body);
-      line-height: 1.65;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.8;
     }
 
     @media (max-width: 860px) {
-      .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 32px 60px;
-      }
+      .services-grid { grid-template-columns: repeat(2, 1fr); padding: 0 32px 60px; }
     }
 
     @media (max-width: 560px) {
-      .services-grid {
-        grid-template-columns: 1fr;
-        padding: 0 24px 48px;
-      }
-      .services-intro {
-        padding: 48px 24px 40px;
-      }
+      .services-grid { grid-template-columns: 1fr; padding: 0 24px 48px; }
+      .services-intro { padding: 48px 24px 40px; }
+      .services-intro-heading { font-size: 36px; }
     }
   </style>
 </head>

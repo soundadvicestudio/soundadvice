@@ -33,17 +33,19 @@ body {
   color: var(--white);
   background-color: var(--black);
   overflow-x: hidden;
+  position: relative;
 }
 
 /* ── PAGE BACKGROUND ── */
 .page-bg {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   background-image: url('https://static.wixstatic.com/media/23043d_b6f0925552004eeaa819d6dd8cf41ec8~mv2.png');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
+  min-height: 100%;
 }
 
 .page-content {
