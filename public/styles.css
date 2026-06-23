@@ -113,44 +113,53 @@ body {
 .site-footer {
   background: var(--black);
   border-top: 1px solid var(--border-subtle);
-  padding: 28px 40px;
+  padding: 13px 40px 13px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: auto;
   gap: 20px;
+  min-height: 177px;
 }
 
 .footer-badge img {
-  height: 80px;
+  height: 151px;
   width: auto;
   object-fit: contain;
+  display: block;
+}
+
+.footer-badge:last-child img {
+  height: 139px;
 }
 
 .footer-center {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .footer-socials {
   display: flex;
-  gap: 16px;
+  gap: 10px;
   align-items: center;
 }
 
 .footer-socials a img {
-  width: 34px;
-  height: 34px;
+  width: 39px;
+  height: 39px;
   object-fit: contain;
 }
 
 .footer-copy {
   font-size: 11px;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
+  font-weight: 400;
+  letter-spacing: 3.3px;
+  color: var(--white);
   text-align: center;
+  font-family: 'DM Sans', sans-serif;
+  text-transform: none;
 }
 
 /* ── BUTTONS ── */

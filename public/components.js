@@ -56,7 +56,7 @@ export function initNav(activePage) {
             <img src="https://static.wixstatic.com/media/11062b_8e8bb1bfaeb54186ace77d5ab14933ff~mv2.png" alt="TikTok" />
           </a>
         </div>
-        <p class="footer-copy">©2026 SOUND ADVICE VOCAL STUDIO LLC · All rights reserved</p>
+        <p class="footer-copy">©2026 SOUND ADVICE VOCAL STUDIO LLC - All rights reserved.</p>
       </div>
       <div class="footer-badge">
         <img src="https://static.wixstatic.com/media/23043d_7b4e3ff7e2864e3ab188e7209775df5d~mv2.png" alt="Vocal Health Education Member" />
