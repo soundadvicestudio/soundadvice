@@ -67,7 +67,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   gap: 8px;
-  padding: 10px 27px;
+  padding: 0 27px;
   height: 39px;
   background: var(--black);
 }
@@ -150,11 +150,6 @@ body {
   width: 155px;
   object-fit: contain;
   display: block;
-}
-
-.footer-badge:last-child img {
-  height: 139px;
-  width: 143px;
 }
 
 .footer-socials {
