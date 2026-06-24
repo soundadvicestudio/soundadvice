@@ -192,6 +192,8 @@
     import { initEventsSection } from '/admin/js/events.js';
     import { initTestimonialsSection } from '/admin/js/testimonials.js';
     import { initServicesSection } from '/admin/js/services.js';
+    import { initHeroSection, initBioSection, initContactSection } from '/admin/js/content.js';
+    import { initServicesContentSection } from '/admin/js/servicesContent.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
     const session = requireSession();
@@ -305,6 +307,10 @@
     await initEventsSection();
     await initTestimonialsSection();
     await initServicesSection();
+    await initHeroSection();
+    await initServicesContentSection(); // appends to hero card — must run after initHeroSection
+    await initBioSection();
+    await initContactSection();
 
     // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────
     window.addEventListener('beforeunload', (e) => {
