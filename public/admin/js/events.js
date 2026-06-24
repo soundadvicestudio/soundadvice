@@ -390,7 +390,7 @@ function renderEventsList() {
                        font-weight:600; color:var(--white);">${ev.title}</span>
           ${ev.pinned ? `<span style="
             font-family:'DM Sans',sans-serif; font-size:10px; font-weight:600;
-            color: rgb(252,151,121); border: 1px solid rgba(252,151,121,0.4);
+            color: var(--teal); border: 1px solid rgba(74,138,147,0.4);
             padding: 1px 7px; letter-spacing: 0.06em; text-transform: uppercase;
           ">PINNED</span>` : ''}
           ${ev.is_past ? `<span style="

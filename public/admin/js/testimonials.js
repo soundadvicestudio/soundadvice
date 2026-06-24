@@ -51,7 +51,7 @@ export async function initTestimonialsSection() {
 function buildTestimonialForm() {
   return `
     <div class="admin-card" id="testimonial-form-card"
-      style="border-color: rgba(252,151,121,0.2);">
+      style="border-color: rgba(74,138,147,0.2);">
       <div class="admin-card-header">
         <div class="admin-card-title" id="testimonial-form-title">New Testimonial</div>
         <button class="btn-admin-secondary" id="cancel-testimonial-btn"
