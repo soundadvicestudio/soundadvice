@@ -222,7 +222,7 @@
       await loadAdminSecret(session.access_token);
     } catch(e) {
       console.error('Failed to load admin config:', e);
-      signOut();
+      window.location.replace('/admin/login.html');
       throw e;
     }
 

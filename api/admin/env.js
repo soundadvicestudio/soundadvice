@@ -23,5 +23,3 @@ export default async function handler(req) {
 
   return successResponse({ secret: process.env.ADMIN_SECRET });
 }
-
-export const config = { runtime: 'edge' };
