@@ -65,7 +65,7 @@ export async function adminFetch(path, body, method = 'POST') {
 
 export async function supabaseFetch(path) {
   const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
-  const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
@@ -220,7 +220,7 @@ export function initDragReorder(container, onReorder) {
 // ── SESSION TOKEN REFRESH ────────────────────────────────────────────────────
 
 const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
 
 /**
  * Attempts to refresh the Supabase session using the stored refresh_token.
