@@ -458,6 +458,20 @@ export async function initContactSection() {
             placeholder="e.g. Virtual coaching options also available..."></textarea>
         </div>
 
+        <div class="admin-field">
+          <label class="admin-label" for="contact-signature-input">
+            Email Reply Signature
+            <span class="optional">appended to every reply sent from the inbox</span>
+          </label>
+          <textarea class="admin-textarea" id="contact-signature-input"
+            style="min-height: 90px;"
+            placeholder="e.g. Jonathan Sturcken&#10;Sound Advice Vocal Studio&#10;alittlesoundadvice.com">
+          </textarea>
+          <p class="admin-field-hint">
+            Plain text only. Line breaks are preserved. Shown below every reply email.
+          </p>
+        </div>
+
         <div style="display:flex; justify-content:flex-end; padding-top:8px;">
           <button class="btn-admin-primary" id="contact-save-btn">
             Save Contact Info
@@ -481,6 +495,7 @@ export async function initContactSection() {
     'contact_address_line2': document.getElementById('contact-addr2-input'),
     'contact_studio_note':   document.getElementById('contact-studio-note-input'),
     'contact_virtual_note':  document.getElementById('contact-virtual-note-input'),
+    'reply_signature':       document.getElementById('contact-signature-input'),
   };
 
   // Populate

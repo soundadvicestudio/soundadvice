@@ -15,7 +15,7 @@ export default async function handler(req) {
     return errorResponse('Invalid JSON');
   }
 
-  const { id, reply_body } = body;
+  const { id, reply_body, signature } = body;
   if (!id || !reply_body?.trim()) {
     return errorResponse('id and reply_body are required');
   }
@@ -58,7 +58,7 @@ export default async function handler(req) {
             Sound Advice Vocal Studio
           </p>
           <div style="color: #fff; font-size: 16px; line-height: 1.7; margin-bottom: 32px;
-            white-space: pre-wrap;">${reply_body.trim()}</div>
+            white-space: pre-wrap;">${reply_body.trim()}${signature ? `\n\n—\n${signature.trim()}` : ''}</div>
           <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 32px 0;" />
           <div style="background: #0d0d0d; border-left: 3px solid rgba(255,255,255,0.2);
             padding: 16px 20px; margin-bottom: 24px;">

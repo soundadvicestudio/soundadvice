@@ -2,7 +2,8 @@ import {
   adminFetch,
   supabaseFetch,
   showToast,
-  showConfirm
+  showConfirm,
+  getSession
 } from './adminCore.js';
 
 let messages = [];
@@ -32,9 +33,22 @@ async function loadMessages() {
   if (!list) return;
 
   try {
-    messages = await supabaseFetch(
-      'studio_messages?select=*&order=created_at.desc'
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+    const session = getSession();
+    const accessToken = session?.access_token || SUPABASE_ANON_KEY;
+
+    const messagesRes = await fetch(
+      `${SUPABASE_URL}/rest/v1/studio_messages?select=*&order=created_at.desc`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      }
     );
+    if (!messagesRes.ok) throw new Error(`Failed to load messages: ${messagesRes.status}`);
+    messages = await messagesRes.json();
     renderMessagesList();
     updateInboxBadge();
   } catch(e) {
@@ -259,9 +273,21 @@ async function sendReply(msg) {
   btn.textContent = 'Sending...';
 
   try {
+    // Load signature from studio_content
+    let signature = '';
+    try {
+      const rows = await supabaseFetch(
+        'studio_content?select=value&key=eq.reply_signature'
+      );
+      signature = rows?.[0]?.value || '';
+    } catch(e) {
+      // Non-fatal — send without signature
+    }
+
     await adminFetch('/api/contact/reply', {
       id: msg.id,
       reply_body: reply,
+      signature,
     });
 
     // Update local state
