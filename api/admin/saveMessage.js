@@ -41,5 +41,3 @@ export default async function handler(req) {
   if (!ok) return errorResponse('Failed to update message', 500);
   return successResponse({ updated: true, id, status });
 }
-
-export const config = { runtime: 'edge' };

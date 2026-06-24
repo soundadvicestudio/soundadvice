@@ -32,5 +32,3 @@ export default async function handler(req) {
 
   return successResponse({ reordered: true, table, count: items.length });
 }
-
-export const config = { runtime: 'edge' };

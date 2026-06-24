@@ -50,5 +50,3 @@ export default async function handler(req) {
     return successResponse({ saved: true, data });
   }
 }
-
-export const config = { runtime: 'edge' };

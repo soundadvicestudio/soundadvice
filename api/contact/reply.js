@@ -94,5 +94,3 @@ export default async function handler(req) {
 
   return successResponse({ replied: true });
 }
-
-export const config = { runtime: 'edge' };

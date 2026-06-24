@@ -66,5 +66,3 @@ export default async function handler(req) {
     token,
   });
 }
-
-export const config = { runtime: 'edge' };

@@ -38,5 +38,3 @@ export default async function handler(req) {
 
   return successResponse({ deleted: true, storagePath });
 }
-
-export const config = { runtime: 'edge' };

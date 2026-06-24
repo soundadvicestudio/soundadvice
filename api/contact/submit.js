@@ -111,5 +111,3 @@ export default async function handler(req) {
 
   return successResponse({ received: true, id: saved?.id });
 }
-
-export const config = { runtime: 'edge' };

@@ -22,5 +22,3 @@ export default async function handler(req) {
   if (!ok) return errorResponse('Failed to save content');
   return successResponse({ saved: true, key, data });
 }
-
-export const config = { runtime: 'edge' };
