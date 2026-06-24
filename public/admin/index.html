@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Sound Advice Vocal Studio</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+  <!-- Background layers — same system as all other pages -->
+  <div class="page-bg-wrap">
+    <div class="page-bg" style="opacity: 0.50"></div>
+    <div class="page-overlay"></div>
+  </div>
+
+  <!-- Loading state shown until auth verified -->
+  <div id="admin-loading-screen" style="
+    position: fixed; inset: 0; z-index: 9999;
+    background: #000; display: flex;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 16px;
+  ">
+    <div class="admin-spinner"></div>
+    <p class="admin-loading-text">Loading...</p>
+  </div>
+
+  <!-- Main admin layout — hidden until auth verified -->
+  <div id="admin-app" style="display: none; position: relative; z-index: 1; min-height: 100vh;">
+
+    <!-- Unsaved changes banner -->
+    <div class="unsaved-banner" id="unsaved-banner">
+      <span>You have unsaved changes.</span>
+      <div class="unsaved-banner-actions">
+        <button class="btn-admin-secondary" id="unsaved-discard">Discard</button>
+        <button class="btn-admin-primary" id="unsaved-save">Save Changes</button>
+      </div>
+    </div>
+
+    <div class="admin-layout">
+
+      <!-- Mobile backdrop -->
+      <div class="admin-sidebar-backdrop" id="sidebar-backdrop"></div>
+
+      <!-- Sidebar -->
+      <aside class="admin-sidebar" id="admin-sidebar">
+        <div class="admin-sidebar-header">
+          <div class="admin-sidebar-title">Sound Advice</div>
+          <div class="admin-sidebar-sub">Site Admin</div>
+        </div>
+
+        <nav class="admin-nav" id="admin-nav">
+          <button class="admin-nav-item active" data-section="events">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Events
+          </button>
+          <button class="admin-nav-item" data-section="testimonials">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+            Testimonials
+          </button>
+          <button class="admin-nav-item" data-section="services">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M2 12h4M18 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+            Services
+          </button>
+          <button class="admin-nav-item" data-section="hero">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
+            </svg>
+            Hero
+          </button>
+          <button class="admin-nav-item" data-section="bio">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Bio & Approach
+          </button>
+          <button class="admin-nav-item" data-section="contact">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.18 2 2 0 0 1 3.59 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            Contact Info
+          </button>
+          <button class="admin-nav-item" data-section="settings">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Site Settings
+          </button>
+        </nav>
+
+        <div class="admin-sidebar-footer">
+          <button class="admin-signout-btn" id="signout-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <div class="admin-main">
+
+        <!-- Top bar -->
+        <div class="admin-topbar">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <button class="admin-hamburger" id="hamburger-btn" aria-label="Toggle menu">
+              <span></span><span></span><span></span>
+            </button>
+            <div class="admin-topbar-title" id="topbar-title">Events</div>
+          </div>
+          <div class="admin-topbar-user" id="topbar-user"></div>
+        </div>
+
+        <!-- Section content -->
+        <div class="admin-content">
+
+          <!-- EVENTS — populated by C1-b -->
+          <section class="admin-section active" data-section="events" id="section-events">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Events coming soon...</p>
+            </div>
+          </section>
+
+          <!-- TESTIMONIALS — populated by C2 -->
+          <section class="admin-section" data-section="testimonials" id="section-testimonials">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Testimonials coming soon...</p>
+            </div>
+          </section>
+
+          <!-- SERVICES — populated by C2 -->
+          <section class="admin-section" data-section="services" id="section-services">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Services coming soon...</p>
+            </div>
+          </section>
+
+          <!-- HERO — populated by C3 -->
+          <section class="admin-section" data-section="hero" id="section-hero">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Hero coming soon...</p>
+            </div>
+          </section>
+
+          <!-- BIO — populated by C3 -->
+          <section class="admin-section" data-section="bio" id="section-bio">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Bio coming soon...</p>
+            </div>
+          </section>
+
+          <!-- CONTACT — populated by C3 -->
+          <section class="admin-section" data-section="contact" id="section-contact">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Contact info coming soon...</p>
+            </div>
+          </section>
+
+          <!-- SETTINGS — populated by C4 -->
+          <section class="admin-section" data-section="settings" id="section-settings">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Settings coming soon...</p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { getSession, requireSession, signOut, loadAdminSecret, guardNavigation, markSaved, hasUnsavedChanges, showConfirm } from '/admin/js/adminCore.js';
+
+    // ── AUTH GATE ──────────────────────────────────────────────────────────
+    const session = requireSession();
+    if (!session) throw new Error('Not authenticated');
+
+    // ── LOAD ADMIN SECRET ─────────────────────────────────────────────────
+    try {
+      await loadAdminSecret(session.access_token);
+    } catch(e) {
+      console.error('Failed to load admin config:', e);
+      signOut();
+      throw e;
+    }
+
+    // ── REVEAL UI ─────────────────────────────────────────────────────────
+    document.getElementById('admin-loading-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'block';
+
+    // Set user display
+    const email = session.user?.email || '';
+    document.getElementById('topbar-user').textContent = email;
+
+    // ── SECTION NAVIGATION ────────────────────────────────────────────────
+    const sectionTitles = {
+      events: 'Events',
+      testimonials: 'Testimonials',
+      services: 'Services',
+      hero: 'Hero',
+      bio: 'Bio & Approach',
+      contact: 'Contact Info',
+      settings: 'Site Settings',
+    };
+
+    async function navigateTo(sectionKey) {
+      const canLeave = await guardNavigation();
+      if (!canLeave) return;
+
+      document.querySelectorAll('.admin-nav-item').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.section === sectionKey);
+      });
+
+      document.getElementById('topbar-title').textContent = sectionTitles[sectionKey] || sectionKey;
+
+      document.querySelectorAll('.admin-section').forEach(sec => {
+        sec.classList.toggle('active', sec.dataset.section === sectionKey);
+      });
+
+      closeSidebar();
+    }
+
+    document.getElementById('admin-nav').addEventListener('click', (e) => {
+      const btn = e.target.closest('.admin-nav-item');
+      if (!btn) return;
+      navigateTo(btn.dataset.section);
+    });
+
+    // ── UNSAVED CHANGES BANNER ────────────────────────────────────────────
+    document.getElementById('unsaved-discard').addEventListener('click', async () => {
+      const confirmed = await showConfirm(
+        'Discard Changes',
+        'Are you sure you want to discard all unsaved changes?',
+        'Discard',
+        true
+      );
+      if (confirmed) {
+        markSaved();
+        document.dispatchEvent(new CustomEvent('admin:discard'));
+      }
+    });
+
+    document.getElementById('unsaved-save').addEventListener('click', () => {
+      document.dispatchEvent(new CustomEvent('admin:save'));
+    });
+
+    // ── SIGN OUT ──────────────────────────────────────────────────────────
+    document.getElementById('signout-btn').addEventListener('click', async () => {
+      if (hasUnsavedChanges()) {
+        const confirmed = await showConfirm(
+          'Sign Out',
+          'You have unsaved changes. Sign out anyway?',
+          'Sign Out',
+          true
+        );
+        if (!confirmed) return;
+      }
+      signOut();
+    });
+
+    // ── MOBILE SIDEBAR ────────────────────────────────────────────────────
+    const sidebar = document.getElementById('admin-sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const hamburger = document.getElementById('hamburger-btn');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      backdrop.classList.add('visible');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      backdrop.classList.remove('visible');
+    }
+
+    hamburger.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+
+    backdrop.addEventListener('click', closeSidebar);
+
+    // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────
+    window.addEventListener('beforeunload', (e) => {
+      if (hasUnsavedChanges()) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  </script>
+</body>
+</html>
