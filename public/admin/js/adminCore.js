@@ -252,7 +252,7 @@ export async function refreshSession() {
       access_token: data.access_token,
       refresh_token: data.refresh_token,
       user: data.user || session.user,
-      expires_at: Date.now() + (data.expires_in * 1000),
+      expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
     };
     localStorage.setItem(SESSION_KEY, JSON.stringify(newSession));
     return data.access_token;
