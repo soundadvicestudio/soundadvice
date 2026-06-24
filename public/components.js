@@ -1,17 +1,6 @@
 const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
 
-export async function supabaseFetch(path) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: {
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-    }
-  });
-  if (!res.ok) throw new Error(`Supabase fetch failed: ${res.status}`);
-  return res.json();
-}
-
 export async function initNav(activePage) {
   const leftPages = [
     { label: 'Home',            href: '/index.html',           key: 'home',            navKey: 'nav_show_home' },
@@ -38,7 +27,17 @@ export async function initNav(activePage) {
             ${p.external ? ' target="_blank" rel="noopener"' : ''}
           >${p.label}</a>
         `).join('')}
+        <button class="nav-hamburger" aria-label="Menu">☰</button>
       </nav>
+      <div class="nav-mobile-dropdown">
+        ${allPages.map(p => `
+          <a href="${p.href}"
+            class="nav-mobile-link${p.key === activePage ? ' active' : ''}"
+            data-nav-key="${p.navKey}"
+            ${p.external ? ' target="_blank" rel="noopener"' : ''}
+          >${p.label}</a>
+        `).join('')}
+      </div>
       <div class="logo-bar">
         <a href="/index.html" aria-label="Sound Advice Vocal Studio — Home">
           <img src="https://static.wixstatic.com/media/23043d_9cbf6867b112498ea07b1bfb7e3ca04b~mv2.jpg" alt="Sound Advice Vocal Studio" />
@@ -78,6 +77,24 @@ export async function initNav(activePage) {
   const footerEl = document.getElementById('site-footer');
   if (footerEl) footerEl.outerHTML = footerHTML;
 
+  // Wire hamburger toggle
+  const hamburgerBtn = document.querySelector('.nav-hamburger');
+  const mobileDropdown = document.querySelector('.nav-mobile-dropdown');
+  if (hamburgerBtn && mobileDropdown) {
+    hamburgerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileDropdown.classList.toggle('open');
+    });
+    mobileDropdown.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', () => mobileDropdown.classList.remove('open'));
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.site-header')) {
+        mobileDropdown.classList.remove('open');
+      }
+    });
+  }
+
   // Fetch studio_content to apply visibility toggles and dynamic hrefs.
   // Fail-open: any error leaves content = {} so all checks below are no-ops
   // and all links/icons remain fully visible.
@@ -101,10 +118,12 @@ export async function initNav(activePage) {
   }
 
   // Nav link visibility — hide if value is exactly the string 'false'
+  // querySelectorAll covers both desktop nav-bar links and mobile dropdown links
   allPages.forEach(p => {
     if (content[p.navKey] === 'false') {
-      const link = document.querySelector(`[data-nav-key="${p.navKey}"]`);
-      if (link) link.style.display = 'none';
+      document.querySelectorAll(`[data-nav-key="${p.navKey}"]`).forEach(link => {
+        link.style.display = 'none';
+      });
     }
   });
 

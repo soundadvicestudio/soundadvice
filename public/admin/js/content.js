@@ -475,6 +475,131 @@ export async function initBioSection() {
   });
 }
 
+// ── PERFORMER'S LAB SECTION ──────────────────────────────────────────────────
+
+export async function initPerformersLabSection() {
+  const section = document.getElementById('section-performers-lab');
+  section.innerHTML = `
+    <div class="admin-section-heading">Performer's Lab</div>
+    <p class="admin-section-sub">
+      Edit the content shown on the Performer's Lab page.
+    </p>
+    <div class="admin-card" id="performers-lab-card">
+      <div class="admin-form" id="performers-lab-form">
+
+        <div class="admin-field">
+          <label class="admin-label" for="plab-headline-input">Headline</label>
+          <input class="admin-input" type="text" id="plab-headline-input"
+            placeholder="e.g. The Performer's Lab" />
+        </div>
+
+        <div class="admin-field">
+          <label class="admin-label" for="plab-body-input">Body Copy</label>
+          <textarea class="admin-textarea" id="plab-body-input"
+            style="min-height: 120px;"
+            placeholder="Describe the Performer's Lab..."></textarea>
+        </div>
+
+        <div class="admin-field">
+          <label class="admin-label" for="plab-cta-label-input">CTA Button Label</label>
+          <input class="admin-input" type="text" id="plab-cta-label-input"
+            placeholder="e.g. Visit The Performer's Lab" />
+        </div>
+
+        <div class="admin-field">
+          <label class="admin-label" for="plab-cta-url-input">CTA Button URL</label>
+          <input class="admin-input" type="text" id="plab-cta-url-input"
+            placeholder="https://performers-lab.com" />
+          <p class="admin-field-hint">
+            Links to performers-lab.com — update if URL changes.
+          </p>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; padding-top:8px;">
+          <button class="btn-admin-primary" id="plab-save-btn">Save Performer's Lab</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  let content = {};
+  try {
+    content = await loadContentMap();
+  } catch(e) {
+    showToast('Failed to load content', 'error');
+  }
+
+  const headlineEl = document.getElementById('plab-headline-input');
+  const bodyEl     = document.getElementById('plab-body-input');
+  const ctaLabelEl = document.getElementById('plab-cta-label-input');
+  const ctaUrlEl   = document.getElementById('plab-cta-url-input');
+  const saveBtn    = document.getElementById('plab-save-btn');
+
+  headlineEl.value = content['performers_lab_headline']  || '';
+  bodyEl.value     = content['performers_lab_body']       || '';
+  ctaLabelEl.value = content['performers_lab_cta_label'] || '';
+  ctaUrlEl.value   = content['performers_lab_cta_url']   || '';
+
+  let formDirty = false;
+
+  function setDirty() {
+    if (!formDirty) {
+      formDirty = true;
+      markUnsaved(
+        () => savePerformersLab(),
+        () => {
+          headlineEl.value = content['performers_lab_headline']  || '';
+          bodyEl.value     = content['performers_lab_body']       || '';
+          ctaLabelEl.value = content['performers_lab_cta_label'] || '';
+          ctaUrlEl.value   = content['performers_lab_cta_url']   || '';
+          formDirty = false;
+        }
+      );
+    }
+  }
+
+  [headlineEl, bodyEl, ctaLabelEl, ctaUrlEl].forEach(el => el.addEventListener('input', setDirty));
+
+  async function savePerformersLab() {
+    if (!formDirty) return;
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+    try {
+      await Promise.all([
+        saveKey('performers_lab_headline',  headlineEl.value.trim()),
+        saveKey('performers_lab_body',       bodyEl.value.trim()),
+        saveKey('performers_lab_cta_label', ctaLabelEl.value.trim()),
+        saveKey('performers_lab_cta_url',   ctaUrlEl.value.trim()),
+      ]);
+      content['performers_lab_headline']  = headlineEl.value.trim();
+      content['performers_lab_body']       = bodyEl.value.trim();
+      content['performers_lab_cta_label'] = ctaLabelEl.value.trim();
+      content['performers_lab_cta_url']   = ctaUrlEl.value.trim();
+      formDirty = false;
+      markSaved();
+      showToast("Performer's Lab saved", 'success');
+    } catch(e) {
+      showToast("Failed to save Performer's Lab: " + e.message, 'error');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = "Save Performer's Lab";
+    }
+  }
+
+  saveBtn.addEventListener('click', savePerformersLab);
+
+  document.addEventListener('admin:save', () => { if (formDirty) savePerformersLab(); });
+  document.addEventListener('admin:discard', () => {
+    if (formDirty) {
+      headlineEl.value = content['performers_lab_headline']  || '';
+      bodyEl.value     = content['performers_lab_body']       || '';
+      ctaLabelEl.value = content['performers_lab_cta_label'] || '';
+      ctaUrlEl.value   = content['performers_lab_cta_url']   || '';
+      formDirty = false;
+    }
+  });
+}
+
 // ── CONTACT INFO SECTION ─────────────────────────────────────────────────────
 
 export async function initContactSection() {

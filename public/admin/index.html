@@ -88,6 +88,12 @@
             </svg>
             Contact Info
           </button>
+          <button class="admin-nav-item" data-section="performers-lab">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+            </svg>
+            Performer's Lab
+          </button>
           <button class="admin-nav-item" data-section="messages">
             <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none"
               stroke="currentColor" stroke-width="2">
@@ -182,6 +188,14 @@
             </div>
           </section>
 
+          <!-- PERFORMER'S LAB — populated by G1 -->
+          <section class="admin-section" data-section="performers-lab" id="section-performers-lab">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Performer's Lab coming soon...</p>
+            </div>
+          </section>
+
           <!-- MESSAGES — populated by C5 -->
           <section class="admin-section" data-section="messages" id="section-messages">
             <div class="admin-loading">
@@ -208,7 +222,7 @@
     import { initEventsSection } from '/admin/js/events.js';
     import { initTestimonialsSection } from '/admin/js/testimonials.js';
     import { initServicesSection } from '/admin/js/services.js';
-    import { initHeroSection, initBioSection, initContactSection } from '/admin/js/content.js';
+    import { initHeroSection, initBioSection, initContactSection, initPerformersLabSection } from '/admin/js/content.js';
     import { initServicesContentSection } from '/admin/js/servicesContent.js';
     import { initSettingsSection } from '/admin/js/settings.js';
     import { initMessagesSection, updateInboxBadge } from '/admin/js/messages.js';
@@ -235,6 +249,7 @@
       hero: 'Hero',
       bio: 'Bio & Approach',
       contact: 'Contact Info',
+      'performers-lab': "Performer's Lab",
       messages: 'Inbox',
       settings: 'Site Settings',
     };
@@ -323,6 +338,7 @@
     await initServicesContentSection(); // appends to hero card — must run after initHeroSection
     await initBioSection();
     await initContactSection();
+    await initPerformersLabSection();
     await initMessagesSection();
     await initSettingsSection();
 
