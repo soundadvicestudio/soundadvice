@@ -7,7 +7,7 @@ export function getSession() {
     const raw = localStorage.getItem(SESSION_KEY);
     if (!raw) return null;
     const session = JSON.parse(raw);
-    if (session.expires_at && session.expires_at > Date.now()) return session;
+    if (session.expires_at && session.expires_at > Date.now() / 1000) return session;
     localStorage.removeItem(SESSION_KEY);
     return null;
   } catch(e) { return null; }
