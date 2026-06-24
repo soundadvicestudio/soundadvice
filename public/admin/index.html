@@ -194,6 +194,8 @@
     import { initServicesSection } from '/admin/js/services.js';
     import { initHeroSection, initBioSection, initContactSection } from '/admin/js/content.js';
     import { initServicesContentSection } from '/admin/js/servicesContent.js';
+    import { initSettingsSection } from '/admin/js/settings.js';
+    import { startSessionRefresh } from '/admin/js/adminCore.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
     const session = requireSession();
@@ -268,6 +270,9 @@
       document.dispatchEvent(new CustomEvent('admin:save'));
     });
 
+    // ── SESSION REFRESH ───────────────────────────────────────────────────
+    startSessionRefresh();
+
     // ── SIGN OUT ──────────────────────────────────────────────────────────
     document.getElementById('signout-btn').addEventListener('click', async () => {
       if (hasUnsavedChanges()) {
@@ -311,6 +316,7 @@
     await initServicesContentSection(); // appends to hero card — must run after initHeroSection
     await initBioSection();
     await initContactSection();
+    await initSettingsSection();
 
     // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────
     window.addEventListener('beforeunload', (e) => {
