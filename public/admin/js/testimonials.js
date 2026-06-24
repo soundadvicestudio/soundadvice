@@ -241,7 +241,14 @@ async function handleListAction(e) {
     const tm = testimonials.find(t => t.id === id);
     if (!tm) return;
     try {
-      await adminFetch('/api/admin/saveTestimonial', { id, active: !tm.active });
+      // Must include quote+name because saveTestimonial.js validates them on every PATCH
+      await adminFetch('/api/admin/saveTestimonial', {
+        id,
+        quote: tm.quote,
+        name: tm.name,
+        title: tm.title ?? null,
+        active: !tm.active,
+      });
       tm.active = !tm.active;
       renderTestimonialsList();
       showToast(tm.active ? 'Testimonial shown' : 'Testimonial hidden', 'success');
