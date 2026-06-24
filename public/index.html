@@ -25,6 +25,22 @@
       margin: 0 auto;
     }
 
+    .hero-headline-clip {
+      overflow: hidden;
+      padding-bottom: 8px;
+    }
+
+    @keyframes heroSlideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .hero-headline {
       font-family: 'Anton', sans-serif;
       font-size: clamp(72px, 9.5vw, 118px);
@@ -35,6 +51,7 @@
       color: var(--purple);
       margin-bottom: 24px;
       max-width: 780px;
+      animation: heroSlideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
     }
 
     .hero-card {
@@ -42,6 +59,7 @@
       padding: 16px 0 20px 0;
       max-width: 780px;
       width: 100%;
+      overflow: hidden;
     }
 
     .hero-body-text {
@@ -457,7 +475,9 @@
       <!-- HERO -->
       <section class="hero">
         <div class="hero-inner">
-          <h1 class="hero-headline" id="hero-headline">Realize Your<br>Vocal Potential</h1>
+          <div class="hero-headline-clip">
+            <h1 class="hero-headline" id="hero-headline">Realize Your<br>Vocal Potential</h1>
+          </div>
           <div class="hero-card">
             <p class="hero-body-text" id="hero-body-text">
               <span>A voice coaching studio specializing in Musical Theater</span>
