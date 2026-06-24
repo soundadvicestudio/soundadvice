@@ -180,7 +180,7 @@
         const raw = localStorage.getItem(SESSION_KEY);
         if (!raw) return null;
         const session = JSON.parse(raw);
-        if (session.expires_at && session.expires_at > Date.now()) return session;
+        if (session.expires_at && session.expires_at > Date.now() / 1000) return session;
         localStorage.removeItem(SESSION_KEY);
         return null;
       } catch(e) {
@@ -242,7 +242,7 @@
           access_token: data.access_token,
           refresh_token: data.refresh_token,
           user: data.user,
-          expires_at: Date.now() + (data.expires_in * 1000),
+          expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
         };
         localStorage.setItem(SESSION_KEY, JSON.stringify(session));
 
