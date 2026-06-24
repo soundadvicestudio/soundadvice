@@ -672,3 +672,16 @@
     flex-direction: column;
   }
 }
+
+/* ── IMAGE UPLOAD DROP ZONE ── */
+
+#image-drop-zone:hover {
+  border-color: rgb(74, 138, 147);
+  color: var(--white);
+}
+
+/* ── EVENT FORM CARD ── */
+
+#event-form-card {
+  border-color: rgba(252, 151, 121, 0.2);
+}

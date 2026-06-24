@@ -189,6 +189,7 @@
 
   <script type="module">
     import { getSession, requireSession, signOut, loadAdminSecret, guardNavigation, markSaved, hasUnsavedChanges, showConfirm } from '/admin/js/adminCore.js';
+    import { initEventsSection } from '/admin/js/events.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
     const session = requireSession();
@@ -297,6 +298,9 @@
     });
 
     backdrop.addEventListener('click', closeSidebar);
+
+    // ── INIT SECTIONS ─────────────────────────────────────────────────────────────
+    await initEventsSection();
 
     // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────
     window.addEventListener('beforeunload', (e) => {

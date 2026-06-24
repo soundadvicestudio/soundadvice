@@ -1,4 +1,5 @@
-const ADMIN_SECRET = window.__ADMIN_SECRET__;
+// Read at call time so the secret is available after loadAdminSecret() resolves
+function getAdminSecret() { return window.__ADMIN_SECRET__; }
 
 /**
  * Full image upload flow:
@@ -12,7 +13,7 @@ export async function uploadImageToStorage(file, onProgress) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-admin-secret': ADMIN_SECRET,
+      'x-admin-secret': getAdminSecret(),
     },
     body: JSON.stringify({
       filename: file.name,
@@ -61,7 +62,7 @@ export async function deleteImageFromStorage(publicUrl) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-admin-secret': ADMIN_SECRET,
+      'x-admin-secret': getAdminSecret(),
     },
     body: JSON.stringify({ storagePath }),
   });
