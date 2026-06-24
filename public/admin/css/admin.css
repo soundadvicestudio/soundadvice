@@ -175,7 +175,7 @@
   font-family: 'Oswald', sans-serif;
   font-size: 28px;
   font-weight: 400;
-  color: rgb(252, 151, 121);
+  color: var(--teal);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 8px;
