@@ -6,6 +6,7 @@ import {
   markSaved,
   showConfirm
 } from './adminCore.js';
+import { uploadImageToStorage, openCropTool } from '../imageUploader.js';
 
 // ── SHARED CONTENT LOADER ────────────────────────────────────────────────────
 
@@ -174,6 +175,36 @@ export async function initBioSection() {
 
     <div class="admin-card" style="margin-bottom: 24px;">
       <div class="admin-card-header">
+        <div class="admin-card-title">Coach Photo</div>
+      </div>
+      <div class="admin-form">
+        <div class="admin-field">
+          <label class="admin-label">
+            Portrait Photo
+            <span class="optional">shown on the Meet Your Coach page</span>
+          </label>
+          <div id="coach-photo-preview-wrap" style="margin-bottom: 12px; display: none;">
+            <img id="coach-photo-preview" src="" alt="Coach portrait"
+              style="width: 200px; height: auto; border-radius: 6px; display: block;
+                     border: 1px solid var(--border-subtle);" />
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button type="button" class="btn-admin-secondary" id="coach-photo-upload-btn"
+              style="padding: 8px 16px; font-size: 13px;">Upload Photo</button>
+            <div id="coach-photo-upload-status" style="font-family: 'DM Sans', sans-serif;
+              font-size: 12px; color: var(--text-muted);"></div>
+          </div>
+          <input type="file" id="coach-photo-file-input"
+            accept="image/jpeg,image/png,image/webp" style="display: none;" />
+          <p class="admin-field-hint">
+            Upload replaces immediately — no separate Save button needed.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card" style="margin-bottom: 24px;">
+      <div class="admin-card-header">
         <div class="admin-card-title">Meet Your Coach — Biography</div>
       </div>
       <div class="admin-form" id="bio-form">
@@ -245,6 +276,44 @@ export async function initBioSection() {
   } catch(e) {
     showToast('Failed to load content', 'error');
   }
+
+  // ── COACH PHOTO ──────────────────────────────────────────────────────────
+  const photoPreviewWrap = document.getElementById('coach-photo-preview-wrap');
+  const photoPreview = document.getElementById('coach-photo-preview');
+  const photoUploadBtn = document.getElementById('coach-photo-upload-btn');
+  const photoFileInput = document.getElementById('coach-photo-file-input');
+  const photoStatus = document.getElementById('coach-photo-upload-status');
+
+  if (content['coach_photo_url']) {
+    photoPreview.src = content['coach_photo_url'];
+    photoPreviewWrap.style.display = 'block';
+  }
+
+  photoUploadBtn.addEventListener('click', () => photoFileInput.click());
+  photoFileInput.addEventListener('change', async () => {
+    const file = photoFileInput.files[0];
+    if (!file) return;
+    photoStatus.textContent = 'Opening crop tool...';
+    try {
+      const cropped = await openCropTool(file, { aspectRatio: null });
+      photoStatus.textContent = 'Uploading...';
+      const url = await uploadImageToStorage(cropped, msg => { photoStatus.textContent = msg; }, 'coach-photo/portrait.jpg');
+      await saveKey('coach_photo_url', url);
+      content['coach_photo_url'] = url;
+      photoPreview.src = url;
+      photoPreviewWrap.style.display = 'block';
+      photoStatus.textContent = 'Photo saved.';
+      showToast('Coach photo updated', 'success');
+    } catch(e) {
+      if (e.message !== 'Crop cancelled') {
+        photoStatus.textContent = 'Upload failed: ' + e.message;
+        showToast('Photo upload failed', 'error');
+      } else {
+        photoStatus.textContent = '';
+      }
+    }
+    photoFileInput.value = '';
+  });
 
   let bioDirty = false;
   let approachDirty = false;

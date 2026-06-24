@@ -369,6 +369,72 @@
       .testimonial-card { padding: 36px 28px; }
       .slider-arrows { left: -8px; right: -8px; }
     }
+
+    /* ── EVENT CARD EXTRAS ── */
+    .event-card { position: relative; }
+    .event-pinned-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: transparent;
+      border: 1px solid gold;
+      color: gold;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      letter-spacing: 0.04em;
+      z-index: 1;
+    }
+    .event-stay-tuned {
+      display: inline-block;
+      border: 1px solid var(--teal);
+      color: var(--teal);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 99px;
+      letter-spacing: 0.04em;
+      margin-top: 8px;
+    }
+    .event-more-info-btn {
+      display: inline-block;
+      background: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 18px;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: border-color 0.2s, color 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .event-more-info-btn:hover { border-color: var(--white); color: var(--white); }
+    .event-info-panel {
+      margin-top: 16px;
+      text-align: left;
+      padding: 16px 20px;
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid var(--border-subtle);
+    }
+    .event-info-panel > p {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 12px;
+      white-space: pre-wrap;
+    }
+    .event-info-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      justify-content: center;
+    }
   </style>
 </head>
 <body>
@@ -384,9 +450,9 @@
       <!-- HERO -->
       <section class="hero">
         <div class="hero-inner">
-          <h1 class="hero-headline">Realize Your<br>Vocal Potential</h1>
+          <h1 class="hero-headline" id="hero-headline">Realize Your<br>Vocal Potential</h1>
           <div class="hero-card">
-            <p class="hero-body-text">
+            <p class="hero-body-text" id="hero-body-text">
               <span>A voice coaching studio specializing in Musical Theater</span>
               <span>and Contemporary Commercial Music,</span>
               <span>offering private coaching, music direction,</span>
@@ -420,7 +486,7 @@
       </section>
 
       <!-- TESTIMONIALS -->
-      <section class="testimonials-section">
+      <section class="testimonials-section" id="testimonials-section">
         <div class="testimonial-slider-wrap">
           <div class="testimonial-stage" id="testimonial-stage">
             <div class="loading-placeholder">Loading...</div>
@@ -439,65 +505,137 @@
   </div>
 
   <script type="module">
-    import { initNav, supabaseFetch } from '/components.js';
+    import { initNav } from '/components.js';
     initNav('home');
 
-    // ── EVENTS ──
-    async function loadEvents() {
-      const grid = document.getElementById('events-grid');
-      try {
-        const events = await supabaseFetch('studio_events?select=*&active=eq.true&order=position.asc');
-        if (!events.length) {
-          grid.innerHTML = '<p class="no-events">No upcoming events at this time. Check back soon!</p>';
-          return;
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+
+    async function fetchFromSupabase(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
         }
-        grid.innerHTML = events.map(ev => `
-          <div class="event-card">
-            ${ev.image_url
-              ? `<img class="event-card-image" src="${ev.image_url}" alt="${ev.title}" />`
-              : `<div class="event-card-image-placeholder">No image</div>`
-            }
-            <div class="event-card-body">
-              <h3 class="event-card-title">${ev.title}</h3>
-              <p class="event-card-meta">${ev.date_display}${ev.location ? ` &nbsp;|&nbsp; ${ev.location}` : ''}</p>
-              ${ev.info_url ? `<a href="${ev.info_url}" target="_blank" rel="noopener" class="event-card-info-link">More info</a>` : ''}
-              ${ev.tickets_url ? `<a href="${ev.tickets_url}" target="_blank" rel="noopener" class="btn-teal">Get Tickets</a>` : ''}
-            </div>
-          </div>
-        `).join('');
-      } catch (e) {
-        grid.innerHTML = '<p class="no-events">Could not load events.</p>';
-        console.error(e);
+      });
+      return res.json();
+    }
+
+    let openEventId = null;
+
+    // ── HERO ──────────────────────────────────────────────────────────────────
+    function applyHero(content) {
+      const headlineEl = document.getElementById('hero-headline');
+      const bodyEl = document.getElementById('hero-body-text');
+      if (content.hero_headline && headlineEl) headlineEl.textContent = content.hero_headline;
+      if (content.hero_body && bodyEl) {
+        const lines = content.hero_body.split('\n').filter(l => l.trim());
+        if (lines.length) {
+          bodyEl.innerHTML = '';
+          lines.forEach(line => {
+            const span = document.createElement('span');
+            span.textContent = line;
+            bodyEl.appendChild(span);
+          });
+        }
       }
     }
 
-    // ── TESTIMONIALS ──
-    async function loadTestimonials() {
-      const stage = document.getElementById('testimonial-stage');
-      const dotsEl = document.getElementById('slider-dots');
+    // ── EVENTS ────────────────────────────────────────────────────────────────
+    function eventCardHtml(ev) {
+      const stayTuned = !ev.tickets_url && !ev.description;
+      return `
+        <div class="event-card">
+          ${ev.pinned ? '<div class="event-pinned-badge">★ Featured</div>' : ''}
+          ${ev.image_url
+            ? `<img class="event-card-image" src="${ev.image_url}" alt="${ev.title}" />`
+            : ''}
+          <div class="event-card-body">
+            <h3 class="event-card-title">${ev.title}</h3>
+            <p class="event-card-meta">${ev.date_display || ''}${ev.show_date_range && ev.date_range ? ` — ${ev.date_range}` : ''}</p>
+            ${ev.show_schedule && ev.schedule ? `<p class="event-card-meta">${ev.schedule}</p>` : ''}
+            ${ev.show_address && ev.address ? `<p class="event-card-meta">${ev.address}</p>` : ''}
+            ${ev.location ? `<p class="event-card-meta">${ev.location}</p>` : ''}
+            ${stayTuned
+              ? '<div class="event-stay-tuned">Stay Tuned</div>'
+              : `<button class="event-more-info-btn" data-card-id="${ev.id}">More Info</button>
+                 <div class="event-info-panel" id="info-${ev.id}" style="display:none;">
+                   ${ev.description ? `<p>${ev.description}</p>` : ''}
+                   <div class="event-info-actions">
+                     ${ev.external_url && ev.external_url_label ? `<a href="${ev.external_url}" target="_blank" rel="noopener" class="btn-teal">${ev.external_url_label}</a>` : ''}
+                     ${ev.tickets_url ? `<a href="${ev.tickets_url}" target="_blank" rel="noopener" class="btn-teal">Get Tickets</a>` : ''}
+                   </div>
+                 </div>`
+            }
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadEvents() {
+      const grid = document.getElementById('events-grid');
+      grid.style.opacity = '0.4';
       try {
-        const testimonials = await supabaseFetch('studio_testimonials?select=*&active=eq.true&order=position.asc');
-        if (!testimonials.length) {
-          stage.innerHTML = '';
+        const events = await fetchFromSupabase(
+          'studio_events?select=*&active=eq.true&is_past=eq.false&order=pinned.desc,position.asc'
+        );
+        if (!events || !events.length) {
+          grid.innerHTML = '<p class="no-events" style="text-align:center;">No upcoming events — check back soon!</p>';
           return;
         }
+        grid.innerHTML = events.map(eventCardHtml).join('');
+        grid.addEventListener('click', (e) => {
+          const btn = e.target.closest('.event-more-info-btn');
+          if (!btn) return;
+          const cardId = btn.dataset.cardId;
+          if (openEventId && openEventId !== cardId) {
+            const prevPanel = document.getElementById(`info-${openEventId}`);
+            const prevBtn = grid.querySelector(`.event-more-info-btn[data-card-id="${openEventId}"]`);
+            if (prevPanel) prevPanel.style.display = 'none';
+            if (prevBtn) prevBtn.textContent = 'More Info';
+          }
+          const panel = document.getElementById(`info-${cardId}`);
+          if (!panel) return;
+          const isOpen = panel.style.display !== 'none';
+          panel.style.display = isOpen ? 'none' : 'block';
+          btn.textContent = isOpen ? 'More Info' : 'Less Info';
+          openEventId = isOpen ? null : cardId;
+        });
+      } catch(e) {
+        grid.innerHTML = '<p class="no-events" style="text-align:center;">No upcoming events — check back soon!</p>';
+        console.error('Events load error:', e);
+      } finally {
+        grid.style.opacity = '';
+      }
+    }
 
+    // ── TESTIMONIALS ──────────────────────────────────────────────────────────
+    async function loadTestimonials() {
+      const section = document.getElementById('testimonials-section');
+      const stage = document.getElementById('testimonial-stage');
+      const dotsEl = document.getElementById('slider-dots');
+      stage.style.opacity = '0.4';
+      try {
+        const testimonials = await fetchFromSupabase(
+          'studio_testimonials?select=*&active=eq.true&order=position.asc'
+        );
+        if (!testimonials || !testimonials.length) {
+          section.style.display = 'none';
+          return;
+        }
         stage.innerHTML = testimonials.map((t, i) => `
           <div class="testimonial-card${i === 0 ? ' active' : ''}" data-index="${i}">
             <p class="testimonial-quote">" ${t.quote} "</p>
-            <p class="testimonial-name">- ${t.name}</p>
-            <p class="testimonial-role">${t.title}</p>
+            <p class="testimonial-name">— ${t.name}</p>
+            ${t.title ? `<p class="testimonial-role">${t.title}</p>` : ''}
           </div>
         `).join('');
-
         dotsEl.innerHTML = testimonials.map((_, i) => `
           <button class="slider-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Testimonial ${i + 1}"></button>
         `).join('');
-
         let current = 0;
         const cards = stage.querySelectorAll('.testimonial-card');
         const dots = dotsEl.querySelectorAll('.slider-dot');
-
         function showSlide(n) {
           cards[current].classList.remove('active');
           dots[current].classList.remove('active');
@@ -505,22 +643,28 @@
           cards[current].classList.add('active');
           dots[current].classList.add('active');
         }
-
         document.getElementById('prev-btn').addEventListener('click', () => showSlide(current - 1));
         document.getElementById('next-btn').addEventListener('click', () => showSlide(current + 1));
-        dots.forEach(dot => dot.addEventListener('click', () => showSlide(parseInt(dot.dataset.index))));
-
-        // Auto-advance every 7 seconds
+        dots.forEach(dot => dot.addEventListener('click', () => showSlide(+dot.dataset.index)));
         let timer = setInterval(() => showSlide(current + 1), 7000);
-        // Pause on hover
         stage.addEventListener('mouseenter', () => clearInterval(timer));
         stage.addEventListener('mouseleave', () => { timer = setInterval(() => showSlide(current + 1), 7000); });
-
-      } catch (e) {
-        stage.innerHTML = '';
-        console.error(e);
+      } catch(e) {
+        section.style.display = 'none';
+        console.error('Testimonials load error:', e);
+      } finally {
+        stage.style.opacity = '';
       }
     }
+
+    // ── INIT ──────────────────────────────────────────────────────────────────
+    fetchFromSupabase('studio_content?select=key,value')
+      .then(rows => {
+        if (!rows) return;
+        const content = Object.fromEntries(rows.map(r => [r.key, r.value]));
+        applyHero(content);
+      })
+      .catch(e => console.error('Content load error:', e));
 
     loadEvents();
     loadTestimonials();

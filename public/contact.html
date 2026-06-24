@@ -358,7 +358,7 @@
               </svg>
               <div>
                 <p class="contact-info-text">
-                  <a href="mailto:alittlesoundadvice@gmail.com">alittlesoundadvice@gmail.com</a>
+                  <a href="mailto:alittlesoundadvice@gmail.com" id="contact-email-link">alittlesoundadvice@gmail.com</a>
                 </p>
               </div>
             </div>
@@ -370,9 +370,9 @@
                 <circle cx="12" cy="10" r="3"/>
               </svg>
               <div>
-                <p class="contact-info-text">880 Lafayette St.<br>Mandeville, LA 70448</p>
-                <p class="contact-info-note">All coaching sessions take place at 30 by Ninety Theatre in the new Studio X facility.</p>
-                <p class="contact-info-virtual">Virtual coaching options also available for those outside the Greater New Orleans Area.</p>
+                <p class="contact-info-text" id="contact-address">880 Lafayette St.<br>Mandeville, LA 70448</p>
+                <p class="contact-info-note" id="contact-studio-note">All coaching sessions take place at 30 by Ninety Theatre in the new Studio X facility.</p>
+                <p class="contact-info-virtual" id="contact-virtual-note">Virtual coaching options also available for those outside the Greater New Orleans Area.</p>
               </div>
             </div>
 
@@ -465,23 +465,33 @@
     async function loadContactInfo() {
       try {
         const res = await fetch(
-          `${SUPABASE_URL}/rest/v1/studio_content?select=key,value&key=in.(contact_email,contact_address_line1,contact_address_line2,contact_studio_note,contact_virtual_note)`,
+          `${SUPABASE_URL}/rest/v1/studio_content?select=key,value`,
           { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }}
         );
         if (!res.ok) return;
         const rows = await res.json();
-        const map = {};
-        rows.forEach(r => { map[r.key] = r.value; });
+        const map = Object.fromEntries(rows.map(r => [r.key, r.value]));
 
         if (map.contact_email) {
-          const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
-          emailLinks.forEach(a => {
-            a.href = `mailto:${map.contact_email}`;
-            a.textContent = map.contact_email;
-          });
+          const el = document.getElementById('contact-email-link');
+          if (el) { el.href = `mailto:${map.contact_email}`; el.textContent = map.contact_email; }
         }
-        // Address and notes are currently static HTML — dynamic rendering
-        // happens in the D1 prompt when contact.html is fully made dynamic.
+        if (map.contact_address_line1 || map.contact_address_line2) {
+          const el = document.getElementById('contact-address');
+          if (el) {
+            const l1 = map.contact_address_line1 || '';
+            const l2 = map.contact_address_line2 || '';
+            el.innerHTML = l1 && l2 ? `${l1}<br>${l2}` : (l1 || l2);
+          }
+        }
+        if (map.contact_studio_note) {
+          const el = document.getElementById('contact-studio-note');
+          if (el) el.textContent = map.contact_studio_note;
+        }
+        if (map.contact_virtual_note) {
+          const el = document.getElementById('contact-virtual-note');
+          if (el) el.textContent = map.contact_virtual_note;
+        }
       } catch(e) {
         console.warn('Could not load contact info:', e);
       }

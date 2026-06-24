@@ -99,11 +99,11 @@
     <main class="main-content">
 
       <section class="services-intro">
-        <h1 class="services-intro-heading">Your Voice, Your Growth, Our Expertise</h1>
-        <p class="services-intro-body">At Sound Advice Vocal Studio, we offer a range of services designed to support, strengthen, and elevate your voice and performance. Whether you're seeking personalized coaching, audition prep, vocal health guidance, or professional sound design, we provide the tools and expertise to help you succeed. Explore our services and take the next step in your vocal journey.</p>
+        <h1 class="services-intro-heading" id="services-intro-heading">Your Voice, Your Growth, Our Expertise</h1>
+        <p class="services-intro-body" id="services-intro-body">At Sound Advice Vocal Studio, we offer a range of services designed to support, strengthen, and elevate your voice and performance. Whether you're seeking personalized coaching, audition prep, vocal health guidance, or professional sound design, we provide the tools and expertise to help you succeed. Explore our services and take the next step in your vocal journey.</p>
       </section>
 
-      <section class="services-grid">
+      <section class="services-grid" id="services-grid">
 
         <div class="service-card">
           <img class="service-card-image"
@@ -163,6 +163,60 @@
   <script type="module">
     import { initNav } from '/components.js';
     initNav('services');
+
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+
+    async function fetchFromSupabase(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+      return res.json();
+    }
+
+    async function loadServices() {
+      const grid = document.getElementById('services-grid');
+      grid.style.opacity = '0.4';
+      try {
+        const [rows, services] = await Promise.all([
+          fetchFromSupabase('studio_content?select=key,value'),
+          fetchFromSupabase('studio_services?select=*&active=eq.true&order=position.asc')
+        ]);
+
+        if (rows) {
+          const content = Object.fromEntries(rows.map(r => [r.key, r.value]));
+          const headingEl = document.getElementById('services-intro-heading');
+          const bodyEl = document.getElementById('services-intro-body');
+          if (headingEl && content.services_intro_heading) headingEl.textContent = content.services_intro_heading;
+          if (bodyEl && content.services_intro_body) bodyEl.textContent = content.services_intro_body;
+        }
+
+        if (services && services.length) {
+          grid.innerHTML = services.map(svc => `
+            <div class="service-card">
+              ${svc.image_url
+                ? `<img class="service-card-image" src="${svc.image_url}" alt="${svc.name}" />`
+                : `<div style="width:140px; height:140px; border-radius:50%;
+                     background:var(--bg-card); flex-shrink:0;"></div>`
+              }
+              <h2 class="service-card-title">${svc.name}</h2>
+              <p class="service-card-body">${svc.description}</p>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = '';
+        }
+      } catch(e) {
+        console.error('Services load error:', e);
+      } finally {
+        grid.style.opacity = '';
+      }
+    }
+
+    loadServices();
   </script>
 </body>
 </html>

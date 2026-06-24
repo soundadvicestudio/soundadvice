@@ -114,15 +114,15 @@
     <div id="site-header"></div>
 
     <main class="main-content">
-      <div class="coach-section">
+      <div class="coach-section" id="coach-section">
 
         <!-- TWO-COLUMN INTRO: text left, portrait right -->
         <div class="coach-intro">
           <div class="coach-text-col">
             <h1 class="coach-heading">Meet Your Coach.</h1>
-            <p class="coach-p">Welcome! My name is <strong>Jonathan Sturcken</strong>, and I'm proud to call the Northshore of Lake Pontchartrain, just outside New Orleans, Louisiana, my home. My lifelong passion for the arts led me to study at <strong>Southeastern Louisiana University</strong> and <strong>Berklee College of Music</strong>. Since returning to the New Orleans area in 2013, I've had the privilege of serving as a <strong>vocal educator, director, clinician, and adjudicator,</strong> witnessing firsthand the incredible wealth of talent in our community.</p>
+            <p class="coach-p" id="coach-bio-first">Welcome! My name is <strong>Jonathan Sturcken</strong>, and I'm proud to call the Northshore of Lake Pontchartrain, just outside New Orleans, Louisiana, my home. My lifelong passion for the arts led me to study at <strong>Southeastern Louisiana University</strong> and <strong>Berklee College of Music</strong>. Since returning to the New Orleans area in 2013, I've had the privilege of serving as a <strong>vocal educator, director, clinician, and adjudicator,</strong> witnessing firsthand the incredible wealth of talent in our community.</p>
           </div>
-          <div class="coach-portrait">
+          <div class="coach-portrait" id="coach-portrait-wrap">
             <img
               src="https://static.wixstatic.com/media/23043d_a5f145f945694c7a85b9e7654531496f~mv2.png/v1/fill/w_332,h_311,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Portrait.png"
               alt="Jonathan Sturcken — vocal coach and music director"
@@ -131,7 +131,7 @@
         </div>
 
         <!-- FULL-WIDTH BODY — continues below portrait -->
-        <div class="coach-body">
+        <div class="coach-body" id="coach-bio-body">
           <p class="coach-p">You may also recognize me from <strong>WYLK The Lake 94.7FM,</strong> where I hosted <em>Music with the Maestro</em>, a weekly radio show highlighting new and emerging artists. During the pandemic in 2020, I deepened my training through <strong>Voice Health Education (London)</strong> and became one of the first educators in the Gulf South region to be certified in <strong>Vocal Health First Aid</strong>. This new specialized training allows me to help singers make sustainable choices and address the physical, mental, and environmental factors that shape vocal health. When challenges arise, I can assess dysfunction or imbalance, support self-management, or connect clients with trusted rehabilitation and clinical specialists.</p>
 
           <p class="coach-p">In addition to my work as a vocal coach, I have served extensively as a Music Director for a variety of theatrical productions, collaborating with performers to achieve their best vocal and musical outcomes. In 2024, I returned to Berklee to pursue continuing education in Audio Engineering and Sound Design for live events, expanding the tools I can bring to my clients in theater and live performance settings. I also continue my specialized study of voice through the Voice Study Centre (Suffolk, England) where I train with leading experts in the field of vocal health, performance, and pedagogy.</p>
@@ -143,13 +143,15 @@
         <div class="coach-approach">
           <h2 class="coach-heading">My Approach.</h2>
 
-          <p class="coach-p">Every voice is as unique as the individual who wields it. That belief lies at the heart of my teaching. I find joy in working with both aspiring and professional artists, creating a <strong>supportive, judgment-free environment</strong> that empowers each singer to explore their full potential.</p>
+          <div id="coach-approach-paras">
+            <p class="coach-p">Every voice is as unique as the individual who wields it. That belief lies at the heart of my teaching. I find joy in working with both aspiring and professional artists, creating a <strong>supportive, judgment-free environment</strong> that empowers each singer to explore their full potential.</p>
 
-          <p class="coach-p">My coaching is grounded in the <strong>Biopsychosocial model,</strong> which recognizes the interconnectedness of biology, psychology, and environment in shaping vocal performance. This holistic perspective helps singers connect with their instrument—their voice—in a way that is <strong>authentic, sustainable, and expressive.</strong></p>
+            <p class="coach-p">My coaching is grounded in the <strong>Biopsychosocial model,</strong> which recognizes the interconnectedness of biology, psychology, and environment in shaping vocal performance. This holistic perspective helps singers connect with their instrument—their voice—in a way that is <strong>authentic, sustainable, and expressive.</strong></p>
 
-          <p class="coach-p">I know that singing is deeply personal, and vocal challenges can sometimes feel discouraging. My philosophy is to approach those challenges with <strong>empathy, encouragement, and resilience</strong>—never at the expense of a performer's spirit. Whether you're seeking to refine technique, build confidence, or overcome hurdles, I'll meet you where you are and guide you forward.</p>
+            <p class="coach-p">I know that singing is deeply personal, and vocal challenges can sometimes feel discouraging. My philosophy is to approach those challenges with <strong>empathy, encouragement, and resilience</strong>—never at the expense of a performer's spirit. Whether you're seeking to refine technique, build confidence, or overcome hurdles, I'll meet you where you are and guide you forward.</p>
 
-          <p class="coach-p">Let's uncover the potential of your unique voice—together.</p>
+            <p class="coach-p">Let's uncover the potential of your unique voice—together.</p>
+          </div>
         </div>
 
       </div>
@@ -161,6 +163,87 @@
   <script type="module">
     import { initNav } from '/components.js';
     initNav('meet');
+
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+
+    async function fetchFromSupabase(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+      return res.json();
+    }
+
+    function renderMarkdown(str) {
+      if (!str) return '';
+      return str.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    function paraHtml(text) {
+      return `<p class="coach-p">${renderMarkdown(text)}</p>`;
+    }
+
+    async function loadCoachContent() {
+      const coachSection = document.getElementById('coach-section');
+      if (coachSection) coachSection.style.opacity = '0.4';
+      try {
+        const rows = await fetchFromSupabase('studio_content?select=key,value');
+        if (!rows) return;
+        const content = Object.fromEntries(rows.map(r => [r.key, r.value]));
+
+        // bio_para_1 — left column
+        const firstParaEl = document.getElementById('coach-bio-first');
+        if (firstParaEl) {
+          const val = content.bio_para_1;
+          if (val && val.trim()) firstParaEl.innerHTML = renderMarkdown(val);
+          else firstParaEl.style.display = 'none';
+        }
+
+        // bio_para_2–6 — full-width body
+        const bioBodyEl = document.getElementById('coach-bio-body');
+        if (bioBodyEl) {
+          const paras = [2,3,4,5,6]
+            .map(n => content[`bio_para_${n}`])
+            .filter(v => v && v.trim());
+          bioBodyEl.innerHTML = paras.map(paraHtml).join('');
+        }
+
+        // approach_para_1–6
+        const approachEl = document.getElementById('coach-approach-paras');
+        if (approachEl) {
+          const paras = [1,2,3,4,5,6]
+            .map(n => content[`approach_para_${n}`])
+            .filter(v => v && v.trim());
+          approachEl.innerHTML = paras.map(paraHtml).join('');
+        }
+
+        // Coach photo
+        const portraitWrap = document.getElementById('coach-portrait-wrap');
+        if (portraitWrap) {
+          const photoUrl = content.coach_photo_url;
+          if (photoUrl) {
+            portraitWrap.innerHTML = `<img
+              src="${photoUrl}"
+              alt="Jonathan Sturcken — vocal coach and music director"
+              style="width:332px; height:311px; object-fit:cover; display:block;" />`;
+          } else {
+            portraitWrap.innerHTML = `<div style="width:332px; height:311px;
+              background:var(--bg-card); display:flex; align-items:center;
+              justify-content:center; font-family:'DM Sans',sans-serif;
+              font-size:14px; color:var(--text-muted);">Photo coming soon</div>`;
+          }
+        }
+      } catch(e) {
+        console.error('Coach content load error:', e);
+      } finally {
+        if (coachSection) coachSection.style.opacity = '';
+      }
+    }
+
+    loadCoachContent();
   </script>
 </body>
 </html>

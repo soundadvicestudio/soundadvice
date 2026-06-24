@@ -11,7 +11,7 @@ export default async function handler(req) {
   let body;
   try { body = await req.json(); } catch(e) { return errorResponse('Invalid JSON'); }
 
-  const { filename, contentType } = body;
+  const { filename, contentType, storagePath: customPath } = body;
   if (!filename || !contentType) return errorResponse('filename and contentType are required');
 
   // Validate content type
@@ -20,14 +20,19 @@ export default async function handler(req) {
     return errorResponse('Invalid file type. Allowed: JPG, PNG, WebP, GIF');
   }
 
-  // Generate a unique storage path
-  const timestamp = Date.now();
-  const ext = filename.split('.').pop().toLowerCase();
-  const safeName = filename
-    .replace(/\.[^.]+$/, '')           // strip extension
-    .replace(/[^a-zA-Z0-9-_]/g, '-')  // sanitize
-    .substring(0, 40);                  // cap length
-  const storagePath = `events/${timestamp}-${safeName}.${ext}`;
+  // Use caller-supplied path (e.g. coach-photo/portrait.jpg) or generate a unique one
+  let storagePath;
+  if (customPath) {
+    storagePath = customPath;
+  } else {
+    const timestamp = Date.now();
+    const ext = filename.split('.').pop().toLowerCase();
+    const safeName = filename
+      .replace(/\.[^.]+$/, '')           // strip extension
+      .replace(/[^a-zA-Z0-9-_]/g, '-')  // sanitize
+      .substring(0, 40);                  // cap length
+    storagePath = `events/${timestamp}-${safeName}.${ext}`;
+  }
 
   // Request signed upload URL from Supabase Storage
   const res = await fetch(

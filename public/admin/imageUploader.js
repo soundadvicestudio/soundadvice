@@ -7,18 +7,17 @@ function getAdminSecret() { return window.__ADMIN_SECRET__; }
  * 2. Upload file directly to Supabase Storage
  * 3. Return the public URL
  */
-export async function uploadImageToStorage(file, onProgress) {
+export async function uploadImageToStorage(file, onProgress, storagePath) {
   // Step 1: Get signed upload URL
+  const uploadMeta = { filename: file.name, contentType: file.type };
+  if (storagePath) uploadMeta.storagePath = storagePath;
   const metaRes = await fetch('/api/admin/getUploadUrl', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'x-admin-secret': getAdminSecret(),
     },
-    body: JSON.stringify({
-      filename: file.name,
-      contentType: file.type,
-    }),
+    body: JSON.stringify(uploadMeta),
   });
 
   if (!metaRes.ok) {
