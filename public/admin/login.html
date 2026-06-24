@@ -169,6 +169,10 @@
   <script type="module">
     import { initNav } from '/components.js';
     import { supabase } from '/admin/js/adminCore.js';
+
+    // Clear any stale session written by the old auth system
+    localStorage.removeItem('sb-soundadvice-auth');
+
     initNav(null);
 
     // Redirect if already authenticated
