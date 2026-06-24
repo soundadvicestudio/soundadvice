@@ -21,8 +21,9 @@ export async function initNav(activePage) {
   const rightPages = [
     { label: 'New Client Registration', href: '/new-clients.html',    key: 'new-clients',     navKey: 'nav_show_new_clients' },
     { label: 'Student Portal',          href: '/student-portal.html', key: 'student-portal',  navKey: 'nav_show_student_portal' },
-    { label: 'Contact',                 href: '/contact.html',        key: 'contact',         navKey: 'nav_show_contact' },
-    { label: "The Performer's Lab",     href: 'https://performers-lab.com', key: 'performers-lab', navKey: 'nav_show_performers_lab', external: true },
+    { label: 'Contact',                 href: '/contact.html',            key: 'contact',              navKey: 'nav_show_contact' },
+    { label: 'Past Productions',        href: '/past-productions.html',    key: 'past-productions',     navKey: 'nav_show_past_productions' },
+    { label: "The Performer's Lab",     href: 'https://performers-lab.com', key: 'performers-lab',      navKey: 'nav_show_performers_lab', external: true },
   ];
 
   const allPages = [...leftPages, ...rightPages];

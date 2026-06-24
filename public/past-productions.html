@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Past Productions — Sound Advice Vocal Studio</title>
+  <meta name="description" content="Browse past productions and events from Sound Advice Vocal Studio." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* ── PAGE LAYOUT ── */
+    .past-section {
+      padding: 56px 48px 72px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE HEADING ── */
+    .pp-heading-wrap {
+      margin-bottom: 40px;
+    }
+
+    .pp-heading-row {
+      display: flex;
+      align-items: stretch;
+      width: fit-content;
+    }
+
+    .pp-heading-black {
+      font-family: 'Anton', sans-serif;
+      font-size: 54px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      background: var(--white);
+      color: var(--black);
+      padding: 8px 14px 8px 16px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+    }
+
+    .pp-heading-teal {
+      font-family: 'Anton', sans-serif;
+      font-size: 54px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      background: var(--teal);
+      color: var(--white);
+      padding: 8px 56px 8px 10px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pp-heading-accent {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 44px;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--purple) 0px,
+        var(--purple) 5px,
+        var(--teal) 5px,
+        var(--teal) 11px
+      );
+    }
+
+    .pp-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--purple);
+      opacity: 0.65;
+      margin-top: 0;
+      margin-bottom: 44px;
+      position: relative;
+    }
+
+    .pp-rule::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+      height: 28px;
+      background: var(--purple);
+      opacity: 1;
+    }
+
+    /* ── YEAR GROUP ── */
+    .past-year-section {
+      margin-bottom: 56px;
+    }
+
+    .past-year-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 400;
+      color: rgb(252, 151, 121);
+      letter-spacing: 0.02em;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--teal);
+      margin-bottom: 28px;
+    }
+
+    /* ── CARDS GRID ── */
+    .past-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    /* ── PAST EVENT CARD ── */
+    .past-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .past-card-image {
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .past-card-body {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .past-card-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .past-card-meta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .past-card-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+      margin-top: 10px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── EMPTY STATE ── */
+    .past-empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      padding: 48px 0;
+    }
+
+    /* ── BOTTOM LINK ── */
+    .past-footer-link {
+      text-align: center;
+      padding: 8px 0 0;
+    }
+
+    .past-footer-link a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      color: var(--teal);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .past-footer-link a:hover {
+      color: var(--white);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .past-cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .pp-heading-black,
+      .pp-heading-teal  { font-size: 38px; }
+    }
+
+    @media (max-width: 600px) {
+      .past-section { padding: 40px 24px 56px; }
+      .past-cards-grid { grid-template-columns: 1fr; }
+      .pp-heading-black,
+      .pp-heading-teal  { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg-wrap">
+    <div class="page-bg" style="opacity: 0.30"></div>
+    <div class="page-overlay"></div>
+  </div>
+  <div class="page-content">
+    <div id="site-header"></div>
+
+    <main class="main-content">
+      <div class="past-section">
+
+        <!-- HEADING -->
+        <div class="pp-heading-wrap">
+          <div class="pp-heading-row">
+            <span class="pp-heading-black">Past</span>
+            <span class="pp-heading-teal">
+              Productions
+              <span class="pp-heading-accent"></span>
+            </span>
+          </div>
+          <div class="pp-rule"></div>
+        </div>
+
+        <!-- DYNAMIC CONTENT -->
+        <div id="past-content">
+          <p class="past-empty" style="opacity:0.4;">Loading...</p>
+        </div>
+
+        <!-- VIEW UPCOMING EVENTS LINK -->
+        <div class="past-footer-link">
+          <a href="/index.html">← View Upcoming Events</a>
+        </div>
+
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+  </div>
+
+  <script type="module">
+    import { initNav } from '/components.js';
+    initNav('past-productions');
+
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+
+    async function fetchFromSupabase(path) {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      });
+      return res.json();
+    }
+
+    function pastCardHtml(ev) {
+      return `
+        <div class="past-card">
+          ${ev.image_url
+            ? `<img class="past-card-image" src="${ev.image_url}" alt="${ev.title}" />`
+            : ''}
+          <div class="past-card-body">
+            <h3 class="past-card-title">${ev.title}</h3>
+            <p class="past-card-meta">${ev.date_display || ''}${ev.show_date_range && ev.date_range ? ` — ${ev.date_range}` : ''}</p>
+            ${ev.location ? `<p class="past-card-meta">${ev.location}</p>` : ''}
+            ${ev.description ? `<p class="past-card-desc">${ev.description}</p>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    async function loadPastProductions() {
+      const contentEl = document.getElementById('past-content');
+      contentEl.style.opacity = '0.4';
+      try {
+        const [events] = await Promise.all([
+          fetchFromSupabase(
+            'studio_events?select=*&active=eq.true&is_past=eq.true&order=year.desc,date_sort.desc'
+          ),
+          // Fetch studio_content for future content keys (not used visually here)
+          fetchFromSupabase('studio_content?select=key,value')
+        ]);
+
+        if (!events || !events.length) {
+          contentEl.innerHTML = '<p class="past-empty">No past productions yet — check back soon!</p>';
+          return;
+        }
+
+        // Group by year
+        const byYear = {};
+        events.forEach(ev => {
+          const yr = ev.year || 'Other';
+          if (!byYear[yr]) byYear[yr] = [];
+          byYear[yr].push(ev);
+        });
+
+        // Sort years descending (numeric where possible, string fallback)
+        const years = Object.keys(byYear).sort((a, b) => {
+          const na = Number(a), nb = Number(b);
+          if (!isNaN(na) && !isNaN(nb)) return nb - na;
+          return String(b).localeCompare(String(a));
+        });
+
+        contentEl.innerHTML = years.map(yr => `
+          <div class="past-year-section">
+            <h2 class="past-year-heading">${yr}</h2>
+            <div class="past-cards-grid">
+              ${byYear[yr].map(pastCardHtml).join('')}
+            </div>
+          </div>
+        `).join('');
+
+      } catch(e) {
+        contentEl.innerHTML = '<p class="past-empty">No past productions yet — check back soon!</p>';
+        console.error('Past productions load error:', e);
+      } finally {
+        contentEl.style.opacity = '';
+      }
+    }
+
+    loadPastProductions();
+  </script>
+</body>
+</html>
