@@ -168,21 +168,8 @@
 
   <script type="module">
     import { initNav } from '/components.js';
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+    import { supabase } from '/admin/js/adminCore.js';
     initNav(null);
-
-    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
-
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-      auth: {
-        storageKey: 'sb-soundadvice-auth',
-        storage: window.localStorage,
-        autoRefreshToken: true,
-        persistSession: true,
-        detectSessionInUrl: false
-      }
-    });
 
     // Redirect if already authenticated
     const { data: { session: existingSession } } = await supabase.auth.getSession();
