@@ -190,6 +190,8 @@
   <script type="module">
     import { getSession, requireSession, signOut, loadAdminSecret, guardNavigation, markSaved, hasUnsavedChanges, showConfirm } from '/admin/js/adminCore.js';
     import { initEventsSection } from '/admin/js/events.js';
+    import { initTestimonialsSection } from '/admin/js/testimonials.js';
+    import { initServicesSection } from '/admin/js/services.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
     const session = requireSession();
@@ -301,6 +303,8 @@
 
     // ── INIT SECTIONS ─────────────────────────────────────────────────────────────
     await initEventsSection();
+    await initTestimonialsSection();
+    await initServicesSection();
 
     // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────
     window.addEventListener('beforeunload', (e) => {
