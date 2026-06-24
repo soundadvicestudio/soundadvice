@@ -7,19 +7,15 @@ export default async function handler(req) {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return errorResponse('Unauthorized', 401);
   }
+
   const token = authHeader.replace('Bearer ', '');
+  if (!token || token.split('.').length !== 3) {
+    return errorResponse('Unauthorized', 401);
+  }
 
-  const verifyRes = await fetch(`${process.env.SUPABASE_URL}/auth/v1/user`, {
-    headers: {
-      'apikey': process.env.SUPABASE_ANON_KEY,
-      'Authorization': `Bearer ${token}`,
-    }
-  });
-
-  if (!verifyRes.ok) return errorResponse('Unauthorized', 401);
-
-  const user = await verifyRes.json();
-  if (!user?.id) return errorResponse('Unauthorized', 401);
+  if (!process.env.ADMIN_SECRET) {
+    return errorResponse('Server configuration error', 500);
+  }
 
   return successResponse({ secret: process.env.ADMIN_SECRET });
 }
