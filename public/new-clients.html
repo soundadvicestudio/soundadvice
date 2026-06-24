@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Client Registration | Sound Advice Vocal Studio</title>
+  <meta name="description" content="Register as a new student at Sound Advice Vocal Studio and set up your online booking account." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .widget-page {
+      padding: 48px 48px 64px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .widget-page-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 56px;
+      font-weight: 400;
+      color: rgb(252, 151, 121);
+      text-align: center;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      width: 980px;
+      max-width: 100%;
+    }
+
+    .widget-page-subtitle {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--white);
+      text-align: center;
+      line-height: 1.6;
+      width: 564px;
+      max-width: 100%;
+      margin-bottom: 32px;
+    }
+
+    .widget-page-subtitle a {
+      color: var(--white);
+      text-decoration: underline;
+    }
+
+    .widget-card {
+      background: var(--white);
+      width: 100%;
+      max-width: 980px;
+      min-height: 500px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    @media (max-width: 700px) {
+      .widget-page { padding: 32px 20px 48px; }
+      .widget-page-title { font-size: 36px; }
+      .widget-page-subtitle { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg-wrap">
+    <div class="page-bg" style="opacity: 1.0"></div>
+    <div class="page-overlay"></div>
+  </div>
+  <div class="page-content">
+    <div id="site-header"></div>
+
+    <main class="main-content">
+      <div class="widget-page">
+        <h1 class="widget-page-title">New Client Registration</h1>
+        <p class="widget-page-subtitle">For all new clients, or to set up your online booking account, please use the following form. Existing clients should use the <a href="/student-portal.html">Student Portal</a>.</p>
+        <div class="widget-card">
+          <script src="https://app.mymusicstaff.com/Widget/v4/Widget.ashx?settings=eyJTY2hvb2xJRCI6InNjaF9sZG5KZiIsIldlYnNpdGVJRCI6Indic19WTXJKWSIsIldlYnNpdGVCbG9ja0lEIjoid2JiX3pKUXF5SksifQ=="></script>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+  </div>
+
+  <script type="module">
+    import { initNav } from '/components.js';
+    initNav('new-clients');
+  </script>
+</body>
+</html>
