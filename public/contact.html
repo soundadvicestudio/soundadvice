@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Sound Advice Vocal Studio</title>
+  <meta name="description" content="Get in touch with Sound Advice Vocal Studio. Book a session, ask a question, or learn more about our vocal coaching services." />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* ── CONTACT PAGE ── */
+    .contact-section {
+      padding: 48px 48px 72px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── GET IN TOUCH HEADING ── */
+    .contact-heading-wrap {
+      margin-bottom: 40px;
+    }
+
+    .contact-heading-row {
+      display: flex;
+      align-items: stretch;
+      width: fit-content;
+    }
+
+    .contact-heading-white {
+      font-family: 'Anton', sans-serif;
+      font-size: 54px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      background: var(--white);
+      color: var(--black);
+      padding: 8px 14px 8px 16px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+    }
+
+    .contact-heading-teal {
+      font-family: 'Anton', sans-serif;
+      font-size: 54px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      background: var(--teal);
+      color: var(--white);
+      padding: 8px 10px 8px 10px;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-heading-accent {
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 44px;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--purple) 0px,
+        var(--purple) 5px,
+        var(--teal) 5px,
+        var(--teal) 11px
+      );
+    }
+
+    .contact-rule {
+      width: 100%;
+      height: 1px;
+      background: var(--purple);
+      opacity: 0.65;
+      margin-top: 0;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .contact-rule::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 1px;
+      height: 28px;
+      background: var(--purple);
+    }
+
+    /* ── TWO-COLUMN LAYOUT ── */
+    .contact-columns {
+      display: flex;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    .contact-info-col {
+      flex: 0 0 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .contact-form-col {
+      flex: 1;
+    }
+
+    /* ── CONTACT INFO ITEMS ── */
+    .contact-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .contact-info-icon {
+      flex-shrink: 0;
+      width: 24px;
+      margin-top: 2px;
+      opacity: 0.85;
+    }
+
+    .contact-info-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    .contact-info-text a {
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .contact-info-text a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-info-note {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 6px;
+    }
+
+    .contact-info-virtual {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    /* ── SOCIAL ICONS ROW ── */
+    .contact-socials {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .contact-socials a img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+
+    /* ── FORM ── */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      flex: 1;
+      margin-bottom: 14px;
+    }
+
+    .form-group.half {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    .form-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .form-input,
+    .form-textarea {
+      background: var(--black);
+      border: 1px solid var(--white);
+      border-radius: 0;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 3px 3px 3px 10px;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .form-input {
+      height: 37px;
+    }
+
+    .form-textarea {
+      height: 86px;
+      resize: vertical;
+      padding-top: 8px;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--teal);
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: var(--text-dim);
+    }
+
+    /* ── CHECKBOX ── */
+    .form-checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      margin-top: 10px;
+    }
+
+    .form-checkbox-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--teal);
+      flex-shrink: 0;
+    }
+
+    .form-checkbox-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--white);
+    }
+
+    /* ── SEND BUTTON ── */
+    .form-submit-row {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .btn-send {
+      background: var(--teal);
+      border: 1px solid var(--teal);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0 28px;
+      height: 36px;
+      border-radius: 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-send:hover {
+      background: var(--teal-dark);
+      border-color: var(--teal-dark);
+    }
+
+    /* ── SUCCESS MESSAGE ── */
+    .form-success {
+      display: none;
+      background: rgba(74, 138, 147, 0.15);
+      border: 1px solid var(--teal);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      padding: 20px 24px;
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .contact-columns { flex-direction: column; gap: 48px; }
+      .contact-info-col { flex: none; width: 100%; }
+      .contact-heading-white,
+      .contact-heading-teal { font-size: 38px; }
+    }
+
+    @media (max-width: 600px) {
+      .contact-section { padding: 32px 24px 56px; }
+      .contact-heading-white,
+      .contact-heading-teal { font-size: 30px; }
+      .form-row { flex-direction: column; gap: 0; }
+      .form-group.half { margin-bottom: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg-wrap">
+    <div class="page-bg" style="opacity: 0.30"></div>
+    <div class="page-overlay"></div>
+  </div>
+  <div class="page-content">
+    <div id="site-header"></div>
+
+    <main class="main-content">
+      <div class="contact-section">
+
+        <!-- GET IN TOUCH HEADING -->
+        <div class="contact-heading-wrap">
+          <div class="contact-heading-row">
+            <span class="contact-heading-white">Get In To</span>
+            <span class="contact-heading-teal">
+              uch
+              <span class="contact-heading-accent"></span>
+            </span>
+          </div>
+          <div class="contact-rule"></div>
+        </div>
+
+        <!-- TWO-COLUMN LAYOUT -->
+        <div class="contact-columns">
+
+          <!-- LEFT: CONTACT INFO -->
+          <div class="contact-info-col">
+
+            <div class="contact-info-item">
+              <!-- Envelope icon -->
+              <svg class="contact-info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+              <div>
+                <p class="contact-info-text">
+                  <a href="mailto:alittlesoundadvice@gmail.com">alittlesoundadvice@gmail.com</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <!-- Pin icon -->
+              <svg class="contact-info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div>
+                <p class="contact-info-text">880 Lafayette St.<br>Mandeville, LA 70448</p>
+                <p class="contact-info-note">All coaching sessions take place at 30 by Ninety Theatre in the new Studio X facility.</p>
+                <p class="contact-info-virtual">Virtual coaching options also available for those outside the Greater New Orleans Area.</p>
+              </div>
+            </div>
+
+            <!-- Thumbs up + socials -->
+            <div class="contact-socials">
+              <svg width="28" height="28" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 10v12"/>
+                <path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/>
+              </svg>
+              <a href="https://www.facebook.com/soundadvicestudio" target="_blank" rel="noopener">
+                <img src="https://static.wixstatic.com/media/11062b_2381e8a6e7444f4f902e7b649aa3f0ac~mv2.png" alt="Facebook" />
+              </a>
+              <a href="https://www.instagram.com/soundadvicestudio" target="_blank" rel="noopener">
+                <img src="https://static.wixstatic.com/media/11062b_55e4be1e75564866b6c28290f9a9d271~mv2.png" alt="Instagram" />
+              </a>
+              <a href="https://www.tiktok.com/@soundadvicestudio" target="_blank" rel="noopener">
+                <img src="https://static.wixstatic.com/media/11062b_8e8bb1bfaeb54186ace77d5ab14933ff~mv2.png" alt="TikTok" />
+              </a>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: CONTACT FORM -->
+          <div class="contact-form-col">
+            <form
+              class="contact-form"
+              action="https://formspree.io/f/mbdvllob"
+              method="POST"
+              id="contact-form"
+            >
+              <!-- First Name + Last Name row -->
+              <div class="form-row">
+                <div class="form-group half">
+                  <label class="form-label" for="first-name">First Name *</label>
+                  <input class="form-input" type="text" id="first-name" name="first_name" required />
+                </div>
+                <div class="form-group half">
+                  <label class="form-label" for="last-name">Last Name *</label>
+                  <input class="form-input" type="text" id="last-name" name="last_name" required />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">Email *</label>
+                <input class="form-input" type="email" id="email" name="email" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="phone">Phone *</label>
+                <input class="form-input" type="tel" id="phone" name="phone" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">Message *</label>
+                <textarea class="form-textarea" id="message" name="message" required></textarea>
+              </div>
+
+              <div class="form-checkbox-row">
+                <input type="checkbox" id="newsletter" name="newsletter" value="yes" checked />
+                <label class="form-checkbox-label" for="newsletter">I want to subscribe to the newsletter.</label>
+              </div>
+
+              <!-- Hidden Formspree redirect — stay on page, show success inline -->
+              <input type="hidden" name="_next" value="false" />
+
+              <div class="form-submit-row">
+                <button type="submit" class="btn-send">Send</button>
+              </div>
+            </form>
+
+            <!-- Success message shown via JS after submit -->
+            <div class="form-success" id="form-success">
+              Thank you for reaching out! We'll be in touch soon.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+  </div>
+
+  <script type="module">
+    import { initNav } from '/components.js';
+    initNav('contact');
+
+    // Intercept form submit — use AJAX so page doesn't redirect
+    const form = document.getElementById('contact-form');
+    const success = document.getElementById('form-success');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch('https://formspree.io/f/mbdvllob', {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          alert('Something went wrong. Please try again or email us directly.');
+        }
+      } catch(err) {
+        alert('Something went wrong. Please try again or email us directly.');
+      }
+    });
+  </script>
+</body>
+</html>
