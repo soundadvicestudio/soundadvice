@@ -88,6 +88,14 @@
             </svg>
             Contact Info
           </button>
+          <button class="admin-nav-item" data-section="messages">
+            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,12 2,6"/>
+            </svg>
+            Inbox
+          </button>
           <button class="admin-nav-item" data-section="settings">
             <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="3"/>
@@ -174,6 +182,14 @@
             </div>
           </section>
 
+          <!-- MESSAGES — populated by C5 -->
+          <section class="admin-section" data-section="messages" id="section-messages">
+            <div class="admin-loading">
+              <div class="admin-spinner"></div>
+              <p class="admin-loading-text">Inbox coming soon...</p>
+            </div>
+          </section>
+
           <!-- SETTINGS — populated by C4 -->
           <section class="admin-section" data-section="settings" id="section-settings">
             <div class="admin-loading">
@@ -195,6 +211,7 @@
     import { initHeroSection, initBioSection, initContactSection } from '/admin/js/content.js';
     import { initServicesContentSection } from '/admin/js/servicesContent.js';
     import { initSettingsSection } from '/admin/js/settings.js';
+    import { initMessagesSection, updateInboxBadge } from '/admin/js/messages.js';
     import { startSessionRefresh } from '/admin/js/adminCore.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
@@ -226,6 +243,7 @@
       hero: 'Hero',
       bio: 'Bio & Approach',
       contact: 'Contact Info',
+      messages: 'Inbox',
       settings: 'Site Settings',
     };
 
@@ -316,6 +334,7 @@
     await initServicesContentSection(); // appends to hero card — must run after initHeroSection
     await initBioSection();
     await initContactSection();
+    await initMessagesSection();
     await initSettingsSection();
 
     // ── WARN ON PAGE UNLOAD ───────────────────────────────────────────────

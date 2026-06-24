@@ -460,27 +460,75 @@
     import { initNav } from '/components.js';
     initNav('contact');
 
-    // Intercept form submit — use AJAX so page doesn't redirect
+    // Load contact info from studio_content
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+
+    async function loadContactInfo() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/studio_content?select=key,value&key=in.(contact_email,contact_address_line1,contact_address_line2,contact_studio_note,contact_virtual_note)`,
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }}
+        );
+        if (!res.ok) return;
+        const rows = await res.json();
+        const map = {};
+        rows.forEach(r => { map[r.key] = r.value; });
+
+        if (map.contact_email) {
+          const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+          emailLinks.forEach(a => {
+            a.href = `mailto:${map.contact_email}`;
+            a.textContent = map.contact_email;
+          });
+        }
+        // Address and notes are currently static HTML — dynamic rendering
+        // happens in the D1 prompt when contact.html is fully made dynamic.
+      } catch(e) {
+        console.warn('Could not load contact info:', e);
+      }
+    }
+
+    loadContactInfo();
+
+    // Contact form — submits to our own API endpoint
     const form = document.getElementById('contact-form');
     const success = document.getElementById('form-success');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const data = new FormData(form);
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      const data = {
+        first_name: document.getElementById('first-name').value.trim(),
+        last_name:  document.getElementById('last-name').value.trim(),
+        email:      document.getElementById('email').value.trim(),
+        phone:      document.getElementById('phone').value.trim() || null,
+        message:    document.getElementById('message').value.trim(),
+        newsletter: document.getElementById('newsletter').checked,
+      };
+
       try {
-        const res = await fetch('https://formspree.io/f/mbdvllob', {
+        const res = await fetch('/api/contact/submit', {
           method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data),
         });
-        if (res.ok) {
+        const result = await res.json();
+        if (res.ok && result.received) {
           form.style.display = 'none';
           success.style.display = 'block';
         } else {
-          alert('Something went wrong. Please try again or email us directly.');
+          alert(result.error || 'Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Send';
         }
       } catch(err) {
-        alert('Something went wrong. Please try again or email us directly.');
+        alert('Network error. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Send';
       }
     });
   </script>
