@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Sound Advice Vocal Studio</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Login page specific styles */
+    .login-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+    }
+
+    .login-card {
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid var(--border-mid);
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .login-heading {
+      font-family: 'Oswald', sans-serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: rgb(252, 151, 121);
+      text-align: center;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .login-subheading {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: -12px;
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .login-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .login-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .login-input {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-mid);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      padding: 11px 14px;
+      outline: none;
+      border-radius: 0;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .login-input:focus {
+      border-color: rgb(74, 138, 147);
+    }
+
+    .login-error {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: #ff6b6b;
+      text-align: center;
+      display: none;
+      padding: 10px;
+      background: rgba(255, 107, 107, 0.08);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+    }
+
+    .login-btn {
+      background: rgb(74, 138, 147);
+      border: none;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .login-btn:hover { background: rgb(60, 112, 120); }
+    .login-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg-wrap">
+    <div class="page-bg" style="opacity: 0.50"></div>
+    <div class="page-overlay"></div>
+  </div>
+  <div class="page-content">
+    <div id="site-header"></div>
+
+    <main class="main-content">
+      <div class="login-section">
+        <div class="login-card">
+          <div>
+            <h1 class="login-heading">Admin Login</h1>
+            <p class="login-subheading">Sound Advice Vocal Studio</p>
+          </div>
+          <form class="login-form" id="login-form" autocomplete="on">
+            <div class="login-field">
+              <label class="login-label" for="email">Email</label>
+              <input
+                class="login-input"
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <div class="login-field">
+              <label class="login-label" for="password">Password</label>
+              <input
+                class="login-input"
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+            <div class="login-error" id="login-error"></div>
+            <button class="login-btn" type="submit" id="login-btn">
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+  </div>
+
+  <script type="module">
+    import { initNav } from '/components.js';
+    initNav(null);
+
+    const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_E8g0Q5cZxzMHsMYje3SmGw_QdoOeaUT';
+    const SESSION_KEY = 'sb-soundadvice-auth';
+
+    // Check if already logged in
+    function getSession() {
+      try {
+        const raw = localStorage.getItem(SESSION_KEY);
+        if (!raw) return null;
+        const session = JSON.parse(raw);
+        if (session.expires_at && session.expires_at > Date.now()) return session;
+        localStorage.removeItem(SESSION_KEY);
+        return null;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    if (getSession()) {
+      window.location.replace('/admin/');
+    }
+
+    // Form submit
+    const form = document.getElementById('login-form');
+    const errorEl = document.getElementById('login-error');
+    const btn = document.getElementById('login-btn');
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.style.display = 'block';
+    }
+
+    function hideError() {
+      errorEl.style.display = 'none';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideError();
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
+          {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          showError(data.error_description || data.msg || 'Invalid email or password.');
+          btn.disabled = false;
+          btn.textContent = 'Sign In';
+          return;
+        }
+
+        // Store session
+        const session = {
+          access_token: data.access_token,
+          refresh_token: data.refresh_token,
+          user: data.user,
+          expires_at: Date.now() + (data.expires_in * 1000),
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+
+        // Redirect to admin dashboard
+        window.location.replace('/admin/');
+
+      } catch(err) {
+        showError('Network error. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Sign In';
+      }
+    });
+  </script>
+</body>
+</html>
