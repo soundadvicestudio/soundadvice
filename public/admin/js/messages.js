@@ -92,7 +92,7 @@ function renderMessagesList() {
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
           ${isUnread ? `<span style="
             width:8px; height:8px; border-radius:50%;
-            background: rgb(252,151,121); flex-shrink:0;
+            background: var(--teal); flex-shrink:0;
           "></span>` : '<span style="width:8px; flex-shrink:0;"></span>'}
           <span style="
             font-family:'DM Sans',sans-serif; font-size:14px;
@@ -129,7 +129,7 @@ function renderMessagesList() {
 
 function statusBadge(status) {
   const styles = {
-    unread:  'color: rgb(252,151,121); border-color: rgba(252,151,121,0.4);',
+    unread:  'color: var(--teal); border-color: rgba(74,138,147,0.4);',
     read:    'color: var(--text-muted); border-color: var(--border-subtle);',
     replied: 'color: rgb(74,138,147); border-color: rgba(74,138,147,0.4);',
   };
@@ -342,7 +342,7 @@ export function updateInboxBadge() {
     badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
     badge.style.cssText = `
       margin-left: auto;
-      background: rgb(252,151,121);
+      background: var(--teal);
       color: #000;
       font-size: 10px;
       font-weight: 700;
