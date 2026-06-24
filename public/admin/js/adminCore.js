@@ -1,20 +1,29 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// ── SUPABASE CLIENT ──────────────────────────────────────────────────────────
+
+const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: {
+    storageKey: 'sb-soundadvice-auth',
+    storage: window.localStorage,
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: false
+  }
+});
+
 // ── SESSION / AUTH ──────────────────────────────────────────────────────────
 
-const SESSION_KEY = 'sb-soundadvice-auth';
-
-export function getSession() {
-  try {
-    const raw = localStorage.getItem(SESSION_KEY);
-    if (!raw) return null;
-    const session = JSON.parse(raw);
-    if (session.expires_at && session.expires_at > Date.now() / 1000) return session;
-    localStorage.removeItem(SESSION_KEY);
-    return null;
-  } catch(e) { return null; }
+export async function getSession() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return session;
 }
 
-export function requireSession() {
-  const session = getSession();
+export async function requireSession() {
+  const session = await getSession();
   if (!session) {
     window.location.replace('/admin/login.html');
     return null;
@@ -22,8 +31,8 @@ export function requireSession() {
   return session;
 }
 
-export function signOut() {
-  localStorage.removeItem(SESSION_KEY);
+export async function signOut() {
+  await supabase.auth.signOut();
   window.location.replace('/admin/login.html');
 }
 
@@ -217,70 +226,3 @@ export function initDragReorder(container, onReorder) {
   });
 }
 
-// ── SESSION TOKEN REFRESH ────────────────────────────────────────────────────
-
-const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
-
-/**
- * Attempts to refresh the Supabase session using the stored refresh_token.
- * Updates localStorage with the new session if successful.
- * Returns the new access_token, or null if refresh failed.
- */
-export async function refreshSession() {
-  const session = getSession();
-  if (!session?.refresh_token) return null;
-
-  try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=refresh_token`, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_ANON_KEY,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ refresh_token: session.refresh_token }),
-    });
-
-    if (!res.ok) {
-      // Refresh token expired or invalid — sign out
-      signOut();
-      return null;
-    }
-
-    const data = await res.json();
-    const newSession = {
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      user: data.user || session.user,
-      expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
-    };
-    localStorage.setItem(SESSION_KEY, JSON.stringify(newSession));
-    return data.access_token;
-
-  } catch(e) {
-    console.error('Session refresh failed:', e);
-    return null;
-  }
-}
-
-/**
- * Starts a background refresh interval.
- * Refreshes the token 5 minutes before it expires.
- * Call this once after the admin dashboard confirms a valid session.
- */
-export function startSessionRefresh() {
-  const session = getSession();
-  if (!session) return;
-
-  const msUntilExpiry = session.expires_at - Date.now();
-  const refreshAt = Math.max(msUntilExpiry - (5 * 60 * 1000), 10000); // 5 min before expiry, min 10s
-
-  setTimeout(async () => {
-    const newToken = await refreshSession();
-    if (newToken) {
-      // Schedule next refresh
-      startSessionRefresh();
-    }
-    // If null, signOut() was already called inside refreshSession()
-  }, refreshAt);
-}

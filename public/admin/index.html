@@ -212,10 +212,9 @@
     import { initServicesContentSection } from '/admin/js/servicesContent.js';
     import { initSettingsSection } from '/admin/js/settings.js';
     import { initMessagesSection, updateInboxBadge } from '/admin/js/messages.js';
-    import { startSessionRefresh } from '/admin/js/adminCore.js';
 
     // ── AUTH GATE ──────────────────────────────────────────────────────────
-    const session = requireSession();
+    const session = await requireSession();
     if (!session) throw new Error('Not authenticated');
 
     // ── LOAD ADMIN SECRET ─────────────────────────────────────────────────
@@ -287,9 +286,6 @@
     document.getElementById('unsaved-save').addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('admin:save'));
     });
-
-    // ── SESSION REFRESH ───────────────────────────────────────────────────
-    startSessionRefresh();
 
     // ── SIGN OUT ──────────────────────────────────────────────────────────
     document.getElementById('signout-btn').addEventListener('click', async () => {

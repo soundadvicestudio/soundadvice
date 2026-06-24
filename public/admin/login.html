@@ -168,27 +168,25 @@
 
   <script type="module">
     import { initNav } from '/components.js';
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
     initNav(null);
 
     const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
-    const SESSION_KEY = 'sb-soundadvice-auth';
 
-    // Check if already logged in
-    function getSession() {
-      try {
-        const raw = localStorage.getItem(SESSION_KEY);
-        if (!raw) return null;
-        const session = JSON.parse(raw);
-        if (session.expires_at && session.expires_at > Date.now() / 1000) return session;
-        localStorage.removeItem(SESSION_KEY);
-        return null;
-      } catch(e) {
-        return null;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: {
+        storageKey: 'sb-soundadvice-auth',
+        storage: window.localStorage,
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: false
       }
-    }
+    });
 
-    if (getSession()) {
+    // Redirect if already authenticated
+    const { data: { session: existingSession } } = await supabase.auth.getSession();
+    if (existingSession) {
       window.location.replace('/admin/');
     }
 
@@ -215,45 +213,16 @@
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
-      try {
-        const res = await fetch(
-          `${SUPABASE_URL}/auth/v1/token?grant_type=password`,
-          {
-            method: 'POST',
-            headers: {
-              'apikey': SUPABASE_ANON_KEY,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-          }
-        );
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-        const data = await res.json();
-
-        if (!res.ok) {
-          showError(data.error_description || data.msg || 'Invalid email or password.');
-          btn.disabled = false;
-          btn.textContent = 'Sign In';
-          return;
-        }
-
-        // Store session
-        const session = {
-          access_token: data.access_token,
-          refresh_token: data.refresh_token,
-          user: data.user,
-          expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
-        };
-        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-
-        // Redirect to admin dashboard
-        window.location.replace('/admin/');
-
-      } catch(err) {
-        showError('Network error. Please try again.');
+      if (error) {
+        showError(error.message || 'Invalid email or password.');
         btn.disabled = false;
         btn.textContent = 'Sign In';
+        return;
       }
+
+      window.location.replace('/admin/');
     });
   </script>
 </body>
