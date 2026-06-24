@@ -168,20 +168,30 @@
 
   <script type="module">
     import { initNav } from '/components.js';
-    import { supabase } from '/admin/js/adminCore.js';
-
-    // Clear any stale session written by the old auth system
-    localStorage.removeItem('sb-soundadvice-auth');
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
     initNav(null);
 
-    // Redirect if already authenticated
-    const { data: { session: existingSession } } = await supabase.auth.getSession();
-    if (existingSession) {
+    const supabase = createClient(
+      'https://trtseeytryqwwkoqtkvp.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA',
+      {
+        auth: {
+          storageKey: 'sb-soundadvice-auth',
+          storage: window.localStorage,
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: false
+        }
+      }
+    );
+
+    // If already logged in, go to dashboard
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
       window.location.replace('/admin/');
     }
 
-    // Form submit
     const form = document.getElementById('login-form');
     const errorEl = document.getElementById('login-error');
     const btn = document.getElementById('login-btn');
@@ -204,7 +214,9 @@
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email, password
+      });
 
       if (error) {
         showError(error.message || 'Invalid email or password.');

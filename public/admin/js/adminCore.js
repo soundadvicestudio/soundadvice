@@ -1,24 +1,27 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// ── SUPABASE CLIENT ──────────────────────────────────────────────────────────
-
-const SUPABASE_URL = 'https://trtseeytryqwwkoqtkvp.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA';
-
-export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: {
-    storageKey: 'sb-soundadvice-auth',
-    storage: window.localStorage,
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: false
+const _supabase = createClient(
+  'https://trtseeytryqwwkoqtkvp.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA',
+  {
+    auth: {
+      storageKey: 'sb-soundadvice-auth',
+      storage: window.localStorage,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: false
+    }
   }
-});
+);
+
+// _supabase is intentionally NOT exported.
 
 // ── SESSION / AUTH ──────────────────────────────────────────────────────────
 
 export async function getSession() {
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { user } } = await _supabase.auth.getUser();
+  if (!user) return null;
+  const { data: { session } } = await _supabase.auth.getSession();
   return session;
 }
 
@@ -32,7 +35,7 @@ export async function requireSession() {
 }
 
 export async function signOut() {
-  await supabase.auth.signOut();
+  await _supabase.auth.signOut();
   window.location.replace('/admin/login.html');
 }
 

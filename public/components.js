@@ -23,7 +23,7 @@ export async function initNav(activePage) {
     { label: 'Student Portal',          href: '/student-portal.html', key: 'student-portal',  navKey: 'nav_show_student_portal' },
     { label: 'Contact',                 href: '/contact.html',            key: 'contact',              navKey: 'nav_show_contact' },
     { label: 'Past Productions',        href: '/past-productions.html',    key: 'past-productions',     navKey: 'nav_show_past_productions' },
-    { label: "The Performer's Lab",     href: 'https://performers-lab.com', key: 'performers-lab',      navKey: 'nav_show_performers_lab', external: true },
+    { label: "The Performer's Lab",     href: '/performers-lab.html',       key: 'performers-lab',      navKey: 'nav_show_performers_lab', external: true },
   ];
 
   const allPages = [...leftPages, ...rightPages];
@@ -107,12 +107,6 @@ export async function initNav(activePage) {
       if (link) link.style.display = 'none';
     }
   });
-
-  // Performer's Lab href — set from studio_content, fall back to default
-  const labLink = document.querySelector('[data-nav-key="nav_show_performers_lab"]');
-  if (labLink && content.performers_lab_cta_url) {
-    labLink.href = content.performers_lab_cta_url;
-  }
 
   // Footer social icon visibility
   const socialKeys = {
