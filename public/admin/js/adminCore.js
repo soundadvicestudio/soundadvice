@@ -1,66 +1,35 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-const _supabase = createClient(
+const supabase = createClient(
   'https://trtseeytryqwwkoqtkvp.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA',
-  {
-    auth: {
-      storageKey: 'sb-soundadvice-auth',
-      storage: window.localStorage,
-      autoRefreshToken: true,
-      persistSession: true,
-      detectSessionInUrl: false
-    }
-  }
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA'
 );
-
-// _supabase is intentionally NOT exported.
 
 // ── SESSION / AUTH ──────────────────────────────────────────────────────────
 
 export async function getSession() {
-  const { data: { user } } = await _supabase.auth.getUser();
-  if (!user) return null;
-  const { data: { session } } = await _supabase.auth.getSession();
+  const { data: { session } } = await supabase.auth.getSession();
   return session;
 }
 
 export async function requireSession() {
   const session = await getSession();
   if (!session) {
-    window.location.replace('/admin/login.html');
+    window.location.href = '/admin/login.html';
     return null;
   }
   return session;
 }
 
 export async function signOut() {
-  await _supabase.auth.signOut();
-  window.location.replace('/admin/login.html');
+  await supabase.auth.signOut();
+  window.location.href = '/admin/login.html';
 }
-
-// ── ADMIN SECRET ─────────────────────────────────────────────────────────────
-
-let _adminSecret = null;
-
-export async function loadAdminSecret(accessToken) {
-  if (_adminSecret) return _adminSecret;
-  const res = await fetch('/api/admin/env', {
-    headers: { 'Authorization': `Bearer ${accessToken}` }
-  });
-  if (!res.ok) throw new Error('Failed to load admin config');
-  const data = await res.json();
-  _adminSecret = data.secret;
-  window.__ADMIN_SECRET__ = _adminSecret; // for imageUploader.js
-  return _adminSecret;
-}
-
-export function getAdminSecret() { return _adminSecret; }
 
 // ── API HELPER ──────────────────────────────────────────────────────────────
 
 export async function adminFetch(path, body, method = 'POST') {
-  const secret = getAdminSecret();
+  const secret = window.__ADMIN_SECRET__;
   if (!secret) throw new Error('Admin secret not loaded');
   const res = await fetch(path, {
     method,

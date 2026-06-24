@@ -204,7 +204,7 @@
   </div>
 
   <script type="module">
-    import { getSession, requireSession, signOut, loadAdminSecret, guardNavigation, markSaved, hasUnsavedChanges, showConfirm } from '/admin/js/adminCore.js';
+    import { getSession, requireSession, signOut, guardNavigation, markSaved, hasUnsavedChanges, showConfirm } from '/admin/js/adminCore.js';
     import { initEventsSection } from '/admin/js/events.js';
     import { initTestimonialsSection } from '/admin/js/testimonials.js';
     import { initServicesSection } from '/admin/js/services.js';
@@ -216,15 +216,8 @@
     // ── AUTH GATE ──────────────────────────────────────────────────────────
     const session = await requireSession();
     if (!session) throw new Error('Not authenticated');
-
-    // ── LOAD ADMIN SECRET ─────────────────────────────────────────────────
-    try {
-      await loadAdminSecret(session.access_token);
-    } catch(e) {
-      console.error('Failed to load admin config:', e);
-      window.location.replace('/admin/login.html');
-      throw e;
-    }
+    window.__SESSION = session;
+    window.__ADMIN_SECRET__ = 'a2f09f226432a14fc45e365782a772c6';
 
     // ── REVEAL UI ─────────────────────────────────────────────────────────
     document.getElementById('admin-loading-screen').style.display = 'none';

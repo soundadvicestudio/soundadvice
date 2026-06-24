@@ -174,58 +174,34 @@
 
     const supabase = createClient(
       'https://trtseeytryqwwkoqtkvp.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA',
-      {
-        auth: {
-          storageKey: 'sb-soundadvice-auth',
-          storage: window.localStorage,
-          autoRefreshToken: true,
-          persistSession: true,
-          detectSessionInUrl: false
-        }
-      }
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydHNlZXl0cnlxd3drb3F0a3ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzk2MTUsImV4cCI6MjA5Nzc1NTYxNX0.NjkB2bkn6V-Vz1vfc_Pu0p8c5hXa7i0UpFE7dqKhYeA'
     );
 
-    // If already logged in, go to dashboard
     const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      window.location.replace('/admin/');
-    }
+    if (user) window.location.href = '/admin/';
 
-    const form = document.getElementById('login-form');
-    const errorEl = document.getElementById('login-error');
-    const btn = document.getElementById('login-btn');
-
-    function showError(msg) {
-      errorEl.textContent = msg;
-      errorEl.style.display = 'block';
-    }
-
-    function hideError() {
-      errorEl.style.display = 'none';
-    }
-
-    form.addEventListener('submit', async (e) => {
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      hideError();
+      const errorEl = document.getElementById('login-error');
+      const btn = document.getElementById('login-btn');
+      errorEl.style.display = 'none';
       btn.disabled = true;
       btn.textContent = 'Signing in...';
 
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email, password
+      const { error } = await supabase.auth.signInWithPassword({
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value
       });
 
       if (error) {
-        showError(error.message || 'Invalid email or password.');
+        errorEl.textContent = error.message || 'Invalid email or password.';
+        errorEl.style.display = 'block';
         btn.disabled = false;
         btn.textContent = 'Sign In';
         return;
       }
 
-      window.location.replace('/admin/');
+      window.location.href = '/admin/';
     });
   </script>
 </body>
