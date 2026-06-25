@@ -52,6 +52,7 @@
       margin-bottom: 24px;
       max-width: 780px;
       animation: heroSlideUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      text-shadow: 2px 3px 10px rgba(0, 0, 0, 0.55);
     }
 
     .hero-card {
@@ -69,7 +70,7 @@
       letter-spacing: 0.04em;
       color: var(--white);
       display: block;
-      width: 100%;
+      width: fit-content;
     }
 
     .hero-body-text span {
@@ -77,7 +78,7 @@
       background: rgba(0, 0, 0, 0.85);
       padding: 4px 12px;
       margin-bottom: 3px;
-      width: 100%;
+      width: fit-content;
     }
 
     .hero-cta-row {
@@ -509,10 +510,7 @@
         <div class="events-grid" id="events-grid">
           <div class="loading-placeholder">Loading events...</div>
         </div>
-        <div id="past-prods-link" style="display:none; text-align:center; padding:4px 0 20px;">
-          <a href="/past-productions.html" style="font-family:'DM Sans',sans-serif; font-size:16px; color:var(--teal); text-decoration:none;">View Past Productions →</a>
-        </div>
-        <div style="text-align:center"><div class="cta-with-arrow"><span class="cta-arrow-box">→</span><a href="/services.html" class="btn-teal">Explore More</a></div></div>
+        <div style="text-align:center"><div class="cta-with-arrow"><span class="cta-arrow-box">→</span><a href="/past-productions.html" class="btn-teal">Past Productions</a></div></div>
       </section>
 
       <!-- TESTIMONIALS -->
@@ -614,8 +612,6 @@
           return;
         }
         grid.innerHTML = events.map(eventCardHtml).join('');
-        const pastLink = document.getElementById('past-prods-link');
-        if (pastLink) pastLink.style.display = 'block';
         grid.addEventListener('click', (e) => {
           const btn = e.target.closest('.event-more-info-btn');
           if (!btn) return;
