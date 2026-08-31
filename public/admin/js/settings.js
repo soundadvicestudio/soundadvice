@@ -11,6 +11,7 @@ const NAV_KEYS = [
   { key: 'nav_show_new_clients',     label: 'New Client Registration' },
   { key: 'nav_show_student_portal',  label: 'Student Portal' },
   { key: 'nav_show_contact',         label: 'Contact' },
+  { key: 'nav_show_past_productions', label: 'Past Productions' },
   { key: 'nav_show_performers_lab',  label: "The Performer's Lab" },
 ];
 
