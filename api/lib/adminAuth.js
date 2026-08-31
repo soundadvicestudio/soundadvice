@@ -1,5 +1,8 @@
 export function requireAdminAuth(req) {
-  const secret = req.headers.get('x-admin-secret');
+  const headers = req.headers;
+  const secret = typeof headers.get === 'function'
+    ? headers.get('x-admin-secret')
+    : headers['x-admin-secret'];
   if (!secret || secret !== process.env.ADMIN_SECRET) {
     return false;
   }
