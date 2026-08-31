@@ -3,7 +3,8 @@ import { requireAdminAuth, optionsResponse, errorResponse, successResponse } fro
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-export default async function handler(req) {
+export default {
+  async fetch(req) {
   if (req.method === 'OPTIONS') return optionsResponse();
   if (!requireAdminAuth(req)) return errorResponse('Unauthorized', 401);
   if (req.method !== 'POST') return errorResponse('Method not allowed', 405);
@@ -65,4 +66,5 @@ export default async function handler(req) {
     publicUrl,
     token,
   });
-}
+  }
+};

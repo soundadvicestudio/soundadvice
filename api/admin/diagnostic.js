@@ -1,6 +1,7 @@
 import { requireAdminAuth } from '../lib/adminAuth.js';
 
-export default async function handler(req) {
+export default {
+  async fetch(req) {
   if (!requireAdminAuth(req)) {
     return new Response('Unauthorized', { status: 401 });
   }
@@ -64,4 +65,5 @@ export default async function handler(req) {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });
-}
+  }
+};

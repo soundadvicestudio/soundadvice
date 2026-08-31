@@ -5,7 +5,8 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const ADMIN_EMAIL = 'alittlesoundadvice@gmail.com';
 const FROM_EMAIL = 'Sound Advice Vocal Studio <notifications@alittlesoundadvice.com>';
 
-export default async function handler(req) {
+export default {
+  async fetch(req) {
   if (req.method === 'OPTIONS') return optionsResponse();
   if (req.method !== 'POST') return errorResponse('Method not allowed', 405);
 
@@ -110,4 +111,5 @@ export default async function handler(req) {
   }
 
   return successResponse({ received: true, id: saved?.id });
-}
+  }
+};

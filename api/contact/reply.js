@@ -5,7 +5,8 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const FROM_EMAIL = 'Jonathan Sturcken <alittlesoundadvice@alittlesoundadvice.com>';
 const REPLY_TO_EMAIL = 'alittlesoundadvice@gmail.com';
 
-export default async function handler(req) {
+export default {
+  async fetch(req) {
   if (req.method === 'OPTIONS') return optionsResponse();
   if (!requireAdminAuth(req)) return errorResponse('Unauthorized', 401);
   if (req.method !== 'POST') return errorResponse('Method not allowed', 405);
@@ -93,4 +94,5 @@ export default async function handler(req) {
   );
 
   return successResponse({ replied: true });
-}
+  }
+};

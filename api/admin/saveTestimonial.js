@@ -1,7 +1,8 @@
 import { supabaseRequest } from '../lib/supabaseAdmin.js';
 import { requireAdminAuth, optionsResponse, errorResponse, successResponse } from '../lib/adminAuth.js';
 
-export default async function handler(req) {
+export default {
+  async fetch(req) {
   if (req.method === 'OPTIONS') return optionsResponse();
   if (!requireAdminAuth(req)) return errorResponse('Unauthorized', 401);
   if (!['POST', 'DELETE'].includes(req.method)) return errorResponse('Method not allowed', 405);
@@ -49,4 +50,5 @@ export default async function handler(req) {
     if (!ok) return errorResponse('Failed to insert testimonial');
     return successResponse({ saved: true, data });
   }
-}
+  }
+};
